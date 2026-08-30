@@ -2,6 +2,8 @@
 
 @layer base {
   :root {
+    color-scheme: light !important;
+    supported-color-schemes: light !important;
     --color-dark-green: #016737;
     --color-light-green: #8BC43F;
     --color-soft-gold: #E8A63C;
@@ -13,13 +15,23 @@
   }
 
   html, body {
+    color-scheme: light !important;
     padding: 0;
     margin: 0;
     font-family: 'Poppins', sans-serif;
-    background-color: #FFFFFF;
-    color: #2B2F2C;
+    background-color: #FFFFFF !important;
+    color: #111827 !important;
     -webkit-font-smoothing: antialiased;
     -moz-osx-font-smoothing: grayscale;
+  }
+
+  /* Prevent system dark mode from breaking website light theme */
+  @media (prefers-color-scheme: dark) {
+    :root, html, body {
+      color-scheme: light !important;
+      background-color: #FFFFFF !important;
+      color: #111827 !important;
+    }
   }
 
   * {

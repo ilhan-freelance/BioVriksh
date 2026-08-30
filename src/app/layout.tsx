@@ -37,8 +37,8 @@ export default function RootLayout({
   children: React.ReactNode;
 }) {
   return (
-    <html lang="en" className={`${poppins.variable} ${bodoni.variable} ${alexBrush.variable} ${marker.variable} font-sans h-full antialiased`} suppressHydrationWarning>
-      <body className="min-h-full flex flex-col font-sans bg-white text-[#2B2F2C] selection:bg-[#8BC43F] selection:text-[#016737]" suppressHydrationWarning>
+    <html lang="en" className={`light ${poppins.variable} ${bodoni.variable} ${alexBrush.variable} ${marker.variable} font-sans h-full antialiased`} style={{ colorScheme: "light" }} suppressHydrationWarning>
+      <body className="min-h-full flex flex-col font-sans bg-white text-[#111827] selection:bg-[#8BC43F] selection:text-[#016737]" suppressHydrationWarning>
         {children}
       </body>
     </html>
