@@ -92,29 +92,32 @@ export default function RecentPDFs() {
       />
 
       <div className="max-w-7xl mx-auto px-4 md:px-8">
-        {/* SECTION HEADER — Clean Responsive Fade (No Left Cut-Off) */}
+        {/* SECTION HEADER — Solid Crisp Typography & High Contrast */}
         <motion.div
-          style={{ opacity: titleOpacity }}
-          className="mb-12 flex flex-col md:flex-row md:items-end justify-between gap-4"
+          initial={{ opacity: 0, y: 15 }}
+          whileInView={{ opacity: 1, y: 0 }}
+          viewport={{ once: true }}
+          transition={{ duration: 0.5 }}
+          className="mb-10 flex flex-col md:flex-row md:items-end justify-between gap-4"
         >
           <div>
-            <div className="flex items-center gap-3 mb-3">
-              <div className="w-1 h-7 rounded-full bg-[#016737]" />
-              <span className="text-xs sm:text-sm font-semibold text-[#016737] uppercase tracking-[0.15em]">
+            <div className="flex items-center gap-2.5 mb-2.5">
+              <div className="w-1 h-6 rounded-full bg-[#016737]" />
+              <span className="text-xs font-bold text-[#016737] uppercase tracking-wider">
                 Recent Study Notes
               </span>
             </div>
-            <h2 className="text-3xl sm:text-4xl md:text-5xl font-bold text-[#111827] leading-tight">
+            <h2 className="text-2xl sm:text-3xl md:text-4xl font-extrabold text-[#111827] leading-tight">
               Recent Notes
             </h2>
-            <p className="mt-2 text-[#687269] text-sm sm:text-base max-w-xl">
+            <p className="mt-2 text-xs sm:text-sm text-gray-600 max-w-xl leading-relaxed">
               Explore chapter notes and question sets freshly updated for NEET.
             </p>
           </div>
 
           <a
             href="/chapters"
-            className="inline-flex items-center gap-2 text-xs sm:text-sm font-bold text-[#016737] hover:text-[#014d29] transition-colors"
+            className="inline-flex items-center gap-2 text-xs sm:text-sm font-bold text-[#016737] hover:text-[#014d29] transition-colors self-start md:self-auto"
           >
             <span>View All Chapters</span>
             <BookOpen className="w-4 h-4" />

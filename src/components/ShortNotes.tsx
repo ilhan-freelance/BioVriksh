@@ -142,26 +142,29 @@ export default function ShortNotes() {
       <div className="absolute top-0 left-8 right-8 h-px bg-gradient-to-r from-transparent via-[#8BC43F]/30 to-transparent" />
 
       <div className="max-w-7xl mx-auto px-4 md:px-8">
-        {/* SECTION HEADER — Clean Responsive Fade (No Left Cut-Off) */}
+        {/* SECTION HEADER — Solid Crisp Typography & High Contrast */}
         <motion.div
-          style={{ opacity: titleOpacity }}
-          className="mb-12"
+          initial={{ opacity: 0, y: 15 }}
+          whileInView={{ opacity: 1, y: 0 }}
+          viewport={{ once: true }}
+          transition={{ duration: 0.5 }}
+          className="mb-10"
         >
-          <div className="flex items-center gap-3 mb-3">
-            <div className="w-1 h-7 rounded-full bg-[#8BC43F]" />
-            <span className="text-xs sm:text-sm font-semibold text-[#8BC43F] uppercase tracking-[0.15em]">
+          <div className="flex items-center gap-2.5 mb-2.5">
+            <div className="w-1 h-6 rounded-full bg-[#016737]" />
+            <span className="text-xs font-bold text-[#016737] uppercase tracking-wider">
               Quick Revision
             </span>
           </div>
           <div className="flex flex-col md:flex-row md:items-end md:justify-between gap-4">
             <div>
-              <h2 className="text-3xl sm:text-4xl md:text-5xl font-bold text-[#016737] leading-tight tracking-tight">
+              <h2 className="text-2xl sm:text-3xl md:text-4xl font-extrabold text-[#111827] leading-tight tracking-tight">
                 Short Notes{" "}
-                <span className="text-[#2B2F2C] font-light italic text-2xl md:text-3xl">
+                <span className="text-[#016737] font-semibold text-xl sm:text-2xl">
                   (100% Free)
                 </span>
               </h2>
-              <p className="mt-2 text-[#687269] text-sm sm:text-base max-w-xl">
+              <p className="mt-2 text-xs sm:text-sm text-gray-600 max-w-xl leading-relaxed">
                 One-pager cheatsheets designed for last-minute revision. No fluff, pure concepts.
               </p>
             </div>
