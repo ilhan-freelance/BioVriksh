@@ -89,15 +89,6 @@ export default function Preloader({ onComplete }: PreloaderProps) {
               >
                 Bio Vriksha
               </h1>
-
-              <motion.p
-                initial={{ opacity: 0, y: 10 }}
-                animate={{ opacity: 1, y: 0 }}
-                transition={{ delay: 0.3, duration: 0.5 }}
-                className="mt-4 text-xs sm:text-sm font-semibold tracking-widest uppercase text-[#016737]/80"
-              >
-                NEET Biology Learning Platform
-              </motion.p>
             </motion.div>
           )}
         </AnimatePresence>
