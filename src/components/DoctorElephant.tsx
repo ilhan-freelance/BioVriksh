@@ -55,15 +55,15 @@ export default function DoctorElephant({
         }}
         className="relative z-10 w-full h-full flex items-center justify-center"
       >
-        {/* 1. NEW 3D DOCTOR ELEPHANT BASE CHARACTER */}
+        {/* 1. CLEAN BODY (Hand area erased on body layer so zero double-hand ghosting occurs) */}
         <img
-          src="/doctor_elephant_3d_new.png"
+          src="/doctor_elephant_body_no_hand.png"
           alt="3D Doctor Elephant Mascot"
           className="w-full h-auto object-contain drop-shadow-[0_20px_35px_rgba(1,103,55,0.18)]"
           loading="eager"
         />
 
-        {/* 2. PURE HAND WAVING OVERLAY ("Hii!" Wave Motion) */}
+        {/* 2. ISOLATED WAVING HAND OVERLAY ("Hii!" Wave Motion) */}
         <motion.div
           style={{
             position: "absolute",
@@ -89,7 +89,7 @@ export default function DoctorElephant({
           className="pointer-events-none z-20"
         >
           <img
-            src="/doctor_elephant_hand_layer_new.png"
+            src="/doctor_elephant_hand_only_clean.png"
             alt="Waving Hand"
             className="w-full h-full object-contain"
             loading="eager"

@@ -16,15 +16,6 @@ export default function Preloader({ onComplete }: PreloaderProps) {
   const [stage, setStage] = useState<"elephant" | "brand" | "opening">("elephant");
 
   useEffect(() => {
-    if (typeof window !== "undefined" && sessionStorage.getItem("biovriksha_seen_preloader")) {
-      onComplete();
-      return;
-    }
-
-    if (typeof window !== "undefined") {
-      sessionStorage.setItem("biovriksha_seen_preloader", "true");
-    }
-
     const timer1 = setTimeout(() => setStage("brand"), 2400);
     const timer2 = setTimeout(() => setStage("opening"), 3800);
     const timer3 = setTimeout(() => onComplete(), 5000);
