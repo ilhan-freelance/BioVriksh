@@ -36,15 +36,15 @@ export default function DoctorElephant({
         className="absolute bottom-1 w-[65%] h-5 bg-black/25 rounded-full blur-md pointer-events-none z-0"
       />
 
-      {/* ── 3D CHARACTER CONTAINER WITH LEG STEPPING ── */}
+      {/* ── 3D CHARACTER CONTAINER WITH GENTLE BODY BOUNCE ── */}
       <motion.div
         animate={
           animated
             ? {
-                // Leg stepping & bounce (moves whole body up & down cleanly)
-                y: [0, -16, 2, -12, 0],
-                rotate: [-2, 2, -1, 1, -2],
-                scaleY: [1, 1.03, 0.97, 1.02, 1],
+                // Gentle body bounce & stepping motion
+                y: [0, -14, 2, -10, 0],
+                rotate: [-1.5, 1.5, -1, 1, -1.5],
+                scaleY: [1, 1.02, 0.98, 1.01, 1],
               }
             : {}
         }
@@ -55,30 +55,29 @@ export default function DoctorElephant({
         }}
         className="relative z-10 w-full h-full flex items-center justify-center"
       >
-        {/* 1. CLEAN BASE 3D MODEL (Doctor coat, stethoscope, legs, body 100% stable) */}
+        {/* 1. NEW 3D DOCTOR ELEPHANT BASE CHARACTER */}
         <img
-          src="/doctor_elephant_transparent.png"
+          src="/doctor_elephant_3d_new.png"
           alt="3D Doctor Elephant Mascot"
           className="w-full h-auto object-contain drop-shadow-[0_20px_35px_rgba(1,103,55,0.18)]"
           loading="eager"
         />
 
-        {/* 2. PURE HAND WAVING LAYER (Only the hand paw waves at wrist, zero cloth motion) */}
+        {/* 2. PURE HAND WAVING OVERLAY ("Hii!" Wave Motion) */}
         <motion.div
           style={{
             position: "absolute",
-            top: "47.8%",
-            left: "59.8%",
-            width: "20.4%",
-            height: "13.2%",
-            transformOrigin: "35% 75%", // Wrist joint pivot
+            inset: 0,
+            width: "100%",
+            height: "100%",
+            transformOrigin: "72% 52%", // Arm / wrist joint pivot point
           }}
           animate={
             animated
               ? {
-                  // Pure hand wave back and forth at the wrist
-                  rotate: [-18, 26, -14, 30, -18],
-                  scale: [0.98, 1.08, 0.95, 1.06, 0.98],
+                  // Natural "Hii!" hand wave back & forth at joint
+                  rotate: [-14, 18, -10, 22, -14],
+                  scale: [0.98, 1.04, 0.96, 1.03, 0.98],
                 }
               : {}
           }
@@ -90,8 +89,8 @@ export default function DoctorElephant({
           className="pointer-events-none z-20"
         >
           <img
-            src="/doctor_elephant_hand_only.png"
-            alt="Waving Hand Paw"
+            src="/doctor_elephant_hand_layer_new.png"
+            alt="Waving Hand"
             className="w-full h-full object-contain"
             loading="eager"
           />
