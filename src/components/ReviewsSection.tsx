@@ -204,32 +204,20 @@ export default function ReviewsSection() {
               </div>
             </motion.div>
 
-            {/* RIGHT SIDE: REVIEWS TRACK (Responsive Mobile & Desktop) */}
-            <div className="lg:col-span-7 relative min-h-[400px] lg:h-[520px] flex items-center justify-center">
-              
-              {/* MOBILE VIEW: Clean Touch-Scroll Review Stack */}
-              <div className="lg:hidden w-full space-y-4 py-2">
-                {reviews.slice(0, 3).map((item, idx) => (
-                  <ReviewCard key={`mobile-review-${idx}`} review={item} />
+            {/* RIGHT SIDE: REVIEWS TRACK (Smooth Motion for Mobile & Desktop) */}
+            <div className="lg:col-span-7 relative h-[420px] sm:h-[480px] lg:h-[520px] flex items-center justify-center overflow-hidden px-2 sm:px-4">
+              {/* Top Fade Gradient Mask */}
+              <div className="absolute top-0 inset-x-0 h-16 sm:h-20 bg-gradient-to-b from-white via-white/80 to-transparent z-20 pointer-events-none" />
+
+              {/* Bottom Fade Gradient Mask */}
+              <div className="absolute bottom-0 inset-x-0 h-16 sm:h-24 bg-gradient-to-t from-white via-white/80 to-transparent z-20 pointer-events-none" />
+
+              {/* Infinite Animated Marquee Track */}
+              <div className="w-full max-w-md mx-auto animate-marquee-up space-y-4 sm:space-y-5 py-6">
+                {looped.map((item, idx) => (
+                  <ReviewCard key={`scrolling-card-${idx}`} review={item} />
                 ))}
               </div>
-
-              {/* DESKTOP VIEW: Infinite Marquee Box */}
-              <div className="hidden lg:block absolute -top-16 -bottom-16 left-0 right-0 overflow-hidden px-4 pointer-events-auto">
-                {/* Top Fade Gradient Mask */}
-                <div className="absolute top-0 inset-x-0 h-20 bg-gradient-to-b from-[#F5F4F0] via-[#F5F4F0]/80 to-transparent z-20 pointer-events-none" />
-
-                {/* Bottom Fade Gradient Mask */}
-                <div className="absolute bottom-0 inset-x-0 h-24 bg-gradient-to-t from-[#F5F4F0] via-[#F5F4F0]/80 to-transparent z-20 pointer-events-none" />
-
-                {/* Scrolling Cards Track */}
-                <div className="max-w-md mx-auto animate-marquee-up space-y-5 py-6">
-                  {looped.map((item, idx) => (
-                    <ReviewCard key={`scrolling-card-${idx}`} review={item} />
-                  ))}
-                </div>
-              </div>
-
             </div>
 
           </div>
