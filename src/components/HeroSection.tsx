@@ -33,24 +33,19 @@ export default function HeroSection() {
       className="relative flex flex-col justify-center items-center overflow-hidden bg-white"
       style={{ minHeight: "92vh" }}
     >
-      {/* ── RIGHT-SIDE HERO VISUAL (Desktop & Tablet) ───────────────── */}
+      {/* ── RIGHT-SIDE HERO VISUAL (Subtly Faded Floating Tree Below Navbar) ── */}
       <motion.div
         style={{ y: imgY }}
-        className="absolute right-0 top-0 h-full w-[54%] pointer-events-none hidden lg:block overflow-hidden"
+        className="absolute right-0 top-32 lg:top-36 h-[calc(100%-160px)] max-h-[480px] w-[48%] pointer-events-none hidden lg:block overflow-hidden"
         aria-hidden="true"
       >
-        {/* Background Image */}
+        {/* Subtly Faded Soft Tree Visual */}
         <img
-          src="/hero_premium_clean.png"
-          alt=""
-          className="w-full h-full object-cover object-left opacity-90 transition-transform duration-1000 hover:scale-105"
+          src="/hero_pure_tree_light.png"
+          alt="Bio Vriksha Realistic Tree of Biology"
+          className="w-full h-full object-contain object-center opacity-75 transition-all duration-700 hover:opacity-90"
           draggable={false}
         />
-        {/* Left fade blend into white hero background */}
-        <div className="absolute inset-0 bg-gradient-to-r from-white via-white/50 to-transparent" />
-        {/* Top/Bottom ambient gradient */}
-        <div className="absolute inset-0 bg-gradient-to-b from-white/40 via-transparent to-white/40" />
-
       </motion.div>
 
       {/* ── SUBTLE BACKGROUND AMBIENT GLOW ─────────────────────────── */}
@@ -64,12 +59,12 @@ export default function HeroSection() {
       />
 
       {/* ── MAIN HERO CONTENT ─────────────────────────────────────────── */}
-      <div className="relative z-10 w-full max-w-7xl mx-auto px-6 md:px-12 lg:px-20 pt-32 pb-16 lg:pt-40 lg:pb-24 flex flex-col justify-center">
+      <div className="relative z-10 w-full max-w-7xl mx-auto px-6 md:px-12 lg:px-16 pt-32 pb-16 lg:pt-40 lg:pb-24 flex flex-col justify-center">
         <motion.div
           variants={containerVariants}
           initial="hidden"
           animate="visible"
-          className="max-w-2xl flex flex-col items-start justify-center mt-4 lg:mt-8"
+          className="max-w-3xl flex flex-col items-start justify-center mt-4 lg:mt-8"
         >
 
           {/* Headline */}
@@ -126,10 +121,10 @@ export default function HeroSection() {
             </motion.a>
           </motion.div>
 
-          {/* Trust strip (Single Line) */}
+          {/* Trust strip (Fully Visible Flex Wrap) */}
           <motion.div
             variants={itemVariants}
-            className="flex items-center gap-3 sm:gap-4 text-xs sm:text-sm text-[#687269] whitespace-nowrap overflow-x-auto max-w-full scrollbar-none py-1"
+            className="flex flex-wrap items-center gap-x-6 gap-y-2.5 text-xs sm:text-sm text-[#687269] py-1"
           >
             {[
               "All NEET Subjects Covered",
@@ -139,7 +134,7 @@ export default function HeroSection() {
             ].map((txt) => (
               <div key={txt} className="flex items-center gap-1.5 shrink-0">
                 <CheckCircle className="w-4 h-4 text-[#016737] shrink-0" />
-                <span>{txt}</span>
+                <span className="font-medium">{txt}</span>
               </div>
             ))}
           </motion.div>
@@ -149,9 +144,9 @@ export default function HeroSection() {
       {/* ── MOBILE HERO BACKGROUND VISUAL (Behind text) ── */}
       <div className="lg:hidden absolute inset-0 z-0 pointer-events-none overflow-hidden" aria-hidden="true">
         <img
-          src="/hero_premium_clean.png"
-          alt=""
-          className="w-full h-full object-cover object-center opacity-25"
+          src="/hero_pure_tree_light.png"
+          alt="Bio Vriksha Realistic Tree of Biology"
+          className="w-full h-full object-contain object-center opacity-30 brightness-105"
         />
         <div className="absolute inset-0 bg-gradient-to-b from-white/80 via-white/60 to-white" />
       </div>

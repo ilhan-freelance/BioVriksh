@@ -77,11 +77,11 @@ export default function Preloader({ onComplete }: PreloaderProps) {
                 <div className="w-[380px] h-[180px] bg-gradient-to-r from-[#016737]/15 via-[#8BC43F]/15 to-[#016737]/15 blur-[60px] rounded-full" />
               </div>
 
-              {/* Official Logo Image */}
+              {/* Official Transparent Logo Image */}
               <img
-                src="/logo.jpg"
+                src="/logo_transparent.png"
                 alt="Bio Vriksha Official Logo"
-                className="w-20 h-20 sm:w-24 sm:h-24 object-contain rounded-2xl mb-4 shadow-xl relative z-10"
+                className="w-20 h-20 sm:w-24 sm:h-24 object-contain mb-4 relative z-10 filter drop-shadow-md"
               />
 
               <h1

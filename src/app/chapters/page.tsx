@@ -529,9 +529,15 @@ export default function ChaptersPage() {
                           <Zap className="w-4 h-4 text-[#8BC43F]" />
                           Chapter High-Yield Overview
                         </h4>
-                        <span className="text-[10px] font-bold px-2 py-0.5 rounded-full bg-emerald-100 text-emerald-800">
-                          100% FREE
-                        </span>
+                        <a
+                          href={`/secure-reader?title=${encodeURIComponent(activeChapter.title)}&subject=${encodeURIComponent(activeChapter.classLevel + " · " + activeChapter.unit)}`}
+                          target="_blank"
+                          rel="noopener noreferrer"
+                          className="text-[11px] font-extrabold px-3 py-1.5 rounded-full bg-[#016737] text-white hover:bg-[#014d29] transition-colors flex items-center gap-1 shadow-2xs"
+                        >
+                          <BookOpen className="w-3.5 h-3.5" />
+                          <span>Open Secure Reader ↗</span>
+                        </a>
                       </div>
                       <p className="text-sm text-gray-700 leading-relaxed font-normal">
                         {activeChapter.summary}

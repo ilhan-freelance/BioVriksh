@@ -220,11 +220,13 @@ export default function ShortNotes() {
                     </div>
 
                     <a
-                      href="/chapters"
+                      href={`/secure-reader?title=${encodeURIComponent(note.title)}&subject=${encodeURIComponent(note.subtitle)}&pages=${encodeURIComponent(note.pages)}`}
+                      target="_blank"
+                      rel="noopener noreferrer"
                       className="w-full py-2.5 rounded-xl border border-[#016737] text-[#016737] text-xs font-bold hover:bg-[#016737] hover:text-white transition-all flex items-center justify-center gap-1.5 shadow-2xs text-center"
                     >
                       <BookOpen className="w-3.5 h-3.5" />
-                      <span>View Short Note</span>
+                      <span>Open Secure Reader ↗</span>
                     </a>
                   </div>
                 </div>
