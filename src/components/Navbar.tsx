@@ -102,9 +102,9 @@ export default function Navbar() {
           <div className="w-24 sm:w-36 h-[1px] bg-gradient-to-r from-transparent via-[#8BC43F]/40 to-transparent rounded-full" />
         </div>
 
-        {/* ═══ BOTTOM ROW: NAVIGATIONS SHIFTED SLIGHTLY RIGHT TO ALIGN CHAPTERS UNDER NAME ═══ */}
+        {/* ═══ BOTTOM ROW: NAVIGATIONS ALIGNED SO CHAPTERS SITS UNDER 'Vr' OF BIO VRIKSHA ═══ */}
         <div className="hidden lg:flex items-center justify-center w-full text-center pb-0.5">
-          <nav className="flex items-center justify-center gap-7 xl:gap-9 mx-auto text-center pl-24 sm:pl-28">
+          <nav className="flex items-center justify-center gap-7 xl:gap-9 mx-auto text-center pl-12 sm:pl-16">
             {navLinks.map((link) => {
               const isActive = activeTab === link.name;
               const isChapters = link.name === "Chapters";

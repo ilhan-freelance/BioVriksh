@@ -130,7 +130,6 @@ export default function HeroSection() {
               "All NEET Subjects Covered",
               "5,000+ Verified Questions",
               "NCERT Line-by-Line",
-              "4.9 ★ (50k+ Students)",
             ].map((txt) => (
               <div key={txt} className="flex items-center gap-1.5 shrink-0">
                 <CheckCircle className="w-4 h-4 text-[#016737] shrink-0" />
