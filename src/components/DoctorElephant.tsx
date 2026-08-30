@@ -55,29 +55,29 @@ export default function DoctorElephant({
         }}
         className="relative z-10 w-full h-full flex items-center justify-center"
       >
-        {/* 1. CLEAN BODY (Hand area erased on body layer so zero double-hand ghosting occurs) */}
+        {/* 1. 100% PRISTINE FULL 3D DOCTOR ELEPHANT (No missing parts, no gaps, no slice marks) */}
         <img
-          src="/doctor_elephant_body_no_hand.png"
+          src="/doctor_elephant_pristine_full.png"
           alt="3D Doctor Elephant Mascot"
           className="w-full h-auto object-contain drop-shadow-[0_20px_35px_rgba(1,103,55,0.18)]"
           loading="eager"
         />
 
-        {/* 2. ISOLATED WAVING HAND OVERLAY ("Hii!" Wave Motion) */}
+        {/* 2. SEAMLESS "HII!" HAND PAW WAVING MOTION (Layered over intact body) */}
         <motion.div
           style={{
             position: "absolute",
             inset: 0,
             width: "100%",
             height: "100%",
-            transformOrigin: "72% 52%", // Arm / wrist joint pivot point
+            transformOrigin: "75% 54%", // Arm / wrist joint pivot point
           }}
           animate={
             animated
               ? {
-                  // Natural "Hii!" hand wave back & forth at joint
-                  rotate: [-14, 18, -10, 22, -14],
-                  scale: [0.98, 1.04, 0.96, 1.03, 0.98],
+                  // Natural "Hii!" hand wave back & forth
+                  rotate: [-10, 15, -8, 18, -10],
+                  scale: [0.99, 1.03, 0.97, 1.02, 0.99],
                 }
               : {}
           }
@@ -89,7 +89,7 @@ export default function DoctorElephant({
           className="pointer-events-none z-20"
         >
           <img
-            src="/doctor_elephant_hand_only_clean.png"
+            src="/doctor_elephant_paw_bulb.png"
             alt="Waving Hand"
             className="w-full h-full object-contain"
             loading="eager"
