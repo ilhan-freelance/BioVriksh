@@ -2,14 +2,14 @@
 
 import { useState } from "react";
 import { motion, AnimatePresence } from "framer-motion";
-import { Plus, Minus, Mail, Phone } from "lucide-react";
+import { Plus, Minus } from "lucide-react";
 
 const faqs = [
   {
     id: 1,
     question: "Is BioVriksha free to use?",
     answer:
-      "Yes! The free plan gives you unlimited access to all chapter short notes and NCERT summaries with no login required. Premium unlocks all paid PDFs and practice question sets.",
+      "Yes! The free plan gives you unlimited access to all chapter short notes and NCERT summaries with no login required. Premium unlocks all paid notes and practice question sets.",
   },
   {
     id: 2,
@@ -19,9 +19,9 @@ const faqs = [
   },
   {
     id: 3,
-    question: "Can I download the paid PDFs?",
+    question: "Can I download the paid notes?",
     answer:
-      "Premium PDFs are unlocked for high-quality, instant viewing directly inside the BioVriksha platform. This keeps content updated, secure, and fresh for all members.",
+      "Premium notes are unlocked for high-quality, instant viewing directly inside the BioVriksha platform. This keeps content updated, secure, and fresh for all members.",
   },
   {
     id: 4,
@@ -149,49 +149,9 @@ export default function FAQSection() {
             <h3 className="text-3xl sm:text-4xl md:text-5xl font-extrabold text-[#111827] tracking-tight mb-3">
               Still need help? Send us a note!
             </h3>
-            <p className="text-gray-700 text-sm sm:text-base leading-relaxed mb-8 font-normal">
-              For any other questions, please write us at{" "}
-              <a href="mailto:support@biovriksha.in" className="text-[#016737] font-bold underline underline-offset-4">
-                support@biovriksha.in
-              </a>{" "}
-              or reach out to our team directly.
+            <p className="text-gray-700 text-sm sm:text-base leading-relaxed font-normal">
+              For any other questions or assistance, feel free to reach out to our team directly through our contact channels.
             </p>
-
-            {/* Contact Info Pills */}
-            <div className="flex flex-wrap items-center gap-3.5">
-              {/* Phone Number */}
-              <a
-                href="tel:+919876543210"
-                className="flex items-center gap-2.5 px-4 py-2.5 rounded-full bg-white/90 backdrop-blur-md border border-gray-300 shadow-sm text-xs sm:text-sm font-semibold text-[#111827] hover:border-[#016737] hover:text-[#016737] transition-all"
-              >
-                <Phone className="w-4 h-4 text-[#016737]" />
-                <span>+91 98765 43210</span>
-              </a>
-
-              {/* Email */}
-              <a
-                href="mailto:support@biovriksha.in"
-                className="flex items-center gap-2.5 px-4 py-2.5 rounded-full bg-white/90 backdrop-blur-md border border-gray-300 shadow-sm text-xs sm:text-sm font-semibold text-[#111827] hover:border-[#016737] hover:text-[#016737] transition-all"
-              >
-                <Mail className="w-4 h-4 text-[#016737]" />
-                <span>support@biovriksha.in</span>
-              </a>
-
-              {/* Instagram */}
-              <a
-                href="https://instagram.com"
-                target="_blank"
-                rel="noopener noreferrer"
-                className="flex items-center gap-2.5 px-4 py-2.5 rounded-full bg-white/90 backdrop-blur-md border border-gray-300 shadow-sm text-xs sm:text-sm font-semibold text-[#111827] hover:border-[#016737] hover:text-[#016737] transition-all"
-              >
-                <svg className="w-4 h-4 text-[#016737]" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
-                  <rect x="2" y="2" width="20" height="20" rx="5" ry="5"></rect>
-                  <path d="M16 11.37A4 4 0 1 1 12.63 8 4 4 0 0 1 16 11.37z"></path>
-                  <line x1="17.5" y1="6.5" x2="17.51" y2="6.5"></line>
-                </svg>
-                <span>@biovriksha</span>
-              </a>
-            </div>
           </div>
         </div>
       </div>

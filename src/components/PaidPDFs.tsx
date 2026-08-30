@@ -172,7 +172,7 @@ export default function PaidPDFs() {
           <div className="flex flex-col md:flex-row md:items-end md:justify-between gap-4">
             <div>
               <h2 className="text-4xl md:text-5xl font-bold text-[#016737] leading-tight">
-                Paid PDF&rsquo;s
+                Paid Notes
               </h2>
               <p className="mt-3 text-[#687269] text-base md:text-lg max-w-xl leading-relaxed">
                 High-density question banks crafted by NEET toppers. Pay once, practice infinitely.
@@ -194,91 +194,65 @@ export default function PaidPDFs() {
           className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6"
         >
           {paidPDFs.map((pdf) => (
-            <motion.div key={pdf.id} variants={cardVariants}>
-              <TiltCard className="h-full">
-                <div className="bg-white rounded-2xl border border-[#E8EDE8] shadow-card group cursor-pointer overflow-hidden flex flex-col h-full">
-                  {/* Gradient header */}
-                  <div
-                    className={`h-28 w-full bg-gradient-to-br ${pdf.gradient} flex flex-col justify-between p-5 relative overflow-hidden`}
-                  >
-                    <div className="absolute right-3 bottom-2 opacity-[0.07]">
-                      <Lock className="w-16 h-16 text-[#016737]" />
-                    </div>
+            <motion.div
+              key={pdf.id}
+              variants={cardVariants}
+              whileHover={{ y: -3 }}
+              transition={{ duration: 0.2 }}
+              className="h-full"
+            >
+              <div className="bg-white rounded-2xl border border-gray-200 hover:border-[#016737]/30 group cursor-pointer overflow-hidden flex flex-col h-full transition-all duration-200">
+                {/* Accent top line */}
+                <div className="h-1 w-full bg-[#016737]" />
 
-                    {/* Pulsing PREMIUM tag badge */}
-                    <span
-                      className={`badge-pulse-premium self-start px-3 py-1 rounded-full ${pdf.tagColor} text-white text-[10px] font-bold uppercase tracking-wider shadow-sm`}
-                    >
-                      {pdf.tag}
-                    </span>
-
-                    <div>
-                      <p className="text-[10px] font-semibold text-[#687269] uppercase tracking-wider">
+                {/* Card body */}
+                <div className="p-6 flex flex-col gap-4 flex-1">
+                  <div>
+                    <div className="flex items-center justify-between gap-2 mb-1.5">
+                      <p className="text-xs font-semibold text-[#016737] uppercase tracking-wider">
                         {pdf.chapter}
                       </p>
-                      <h3 className="text-sm font-bold text-[#2B2F2C] leading-snug group-hover:text-[#016737] transition-colors duration-200 mt-0.5 pr-8">
-                        {pdf.subject}
-                      </h3>
+                      <span className="text-xs font-bold text-amber-700 bg-amber-50 px-2.5 py-0.5 rounded-full border border-amber-200">
+                        {pdf.price}
+                      </span>
                     </div>
+                    <h3 className="text-base font-bold text-[#111827] leading-snug group-hover:text-[#016737] transition-colors duration-200">
+                      {pdf.subject}
+                    </h3>
                   </div>
 
-                  {/* Card body */}
-                  <div className="p-5 flex flex-col gap-4 flex-1">
-                    <div className="grid grid-cols-3 gap-2">
-                      <div className="flex flex-col items-center gap-1 bg-[#F8F9FA] rounded-xl p-2.5 text-center">
-                        <Target className="w-4 h-4 text-[#016737]" style={{ strokeWidth: 2 }} />
-                        <span className="text-xs font-bold text-[#2B2F2C]">{pdf.questions}</span>
-                        <span className="text-[9px] font-medium text-[#687269] uppercase tracking-wide">Qs</span>
-                      </div>
-                      <div className="flex flex-col items-center gap-1 bg-[#F8F9FA] rounded-xl p-2.5 text-center">
-                        <BarChart2 className="w-4 h-4" style={{ color: pdf.difficultyColor, strokeWidth: 2 }} />
-                        <span className="text-xs font-bold text-[#2B2F2C]">{pdf.difficulty}</span>
-                        <span className="text-[9px] font-medium text-[#687269] uppercase tracking-wide">Level</span>
-                      </div>
-                      <div className="flex flex-col items-center gap-1 bg-[#F8F9FA] rounded-xl p-2.5 text-center">
-                        <Timer className="w-4 h-4 text-[#016737]" style={{ strokeWidth: 2 }} />
-                        <span className="text-xs font-bold text-[#2B2F2C]">{pdf.time}</span>
-                        <span className="text-[9px] font-medium text-[#687269] uppercase tracking-wide">Time</span>
-                      </div>
-                    </div>
-
-                    <div className="flex flex-wrap gap-1.5">
-                      {pdf.topics.map((topic) => (
-                        <span
-                          key={topic}
-                          className="text-[10px] font-medium text-[#016737] bg-[#016737]/8 px-2.5 py-1 rounded-full"
-                        >
-                          {topic}
-                        </span>
-                      ))}
-                    </div>
-
-                    <div className="space-y-1.5 mt-auto">
-                      {["Detailed Solutions", "Difficulty Analysis"].map((item) => (
-                        <div key={item} className="flex items-center gap-2 text-xs text-[#687269]">
-                          <CheckCircle className="w-3.5 h-3.5 text-[#8BC43F] flex-shrink-0" style={{ strokeWidth: 2.2 }} />
-                          <span>{item}</span>
-                        </div>
-                      ))}
-                    </div>
+                  <div className="flex flex-wrap gap-1.5">
+                    {pdf.topics.map((topic) => (
+                      <span
+                        key={topic}
+                        className="text-[10px] font-medium text-gray-600 bg-gray-100 px-2.5 py-1 rounded-full"
+                      >
+                        {topic}
+                      </span>
+                    ))}
                   </div>
 
-                  {/* CTA footer */}
-                  <div className="px-5 pb-5 pt-1">
-                    <motion.button
-                      onClick={() => handleCheckout(pdf.price, `paid-pdf-${pdf.id}`)}
-                      whileHover={{ scale: 1.04, boxShadow: "0 12px 32px rgba(1,103,55,0.35)" }}
-                      whileTap={{ scale: 0.97 }}
-                      className="btn-shimmer w-full flex items-center justify-center gap-2.5 py-3 rounded-xl bg-[#016737] text-white text-sm font-semibold transition-all duration-250 shadow-md focus:outline-none focus:ring-2 focus:ring-[#8BC43F]"
-                      style={{ backgroundColor: "#016737" }}
-                    >
-                      <Lock className="w-4 h-4" style={{ strokeWidth: 2.2 }} />
-                      <span>Unlock {pdf.price}</span>
-                      <Flame className="w-3.5 h-3.5 text-[#8BC43F]" />
-                    </motion.button>
+                  <div className="space-y-1.5 mt-auto pt-2 border-t border-gray-100">
+                    {["NCERT Chapter Notes", "Practice Question Set"].map((item) => (
+                      <div key={item} className="flex items-center gap-2 text-xs text-gray-600 font-medium">
+                        <CheckCircle className="w-3.5 h-3.5 text-[#016737] flex-shrink-0" style={{ strokeWidth: 2.2 }} />
+                        <span>{item}</span>
+                      </div>
+                    ))}
                   </div>
                 </div>
-              </TiltCard>
+
+                {/* CTA footer */}
+                <div className="px-6 pb-5 pt-1">
+                  <button
+                    onClick={() => handleCheckout(pdf.price, `paid-pdf-${pdf.id}`)}
+                    className="w-full flex items-center justify-center gap-2 py-2.5 rounded-xl bg-[#016737] text-white text-xs font-bold group-hover:bg-[#014d29] transition-all duration-200"
+                  >
+                    <Lock className="w-3.5 h-3.5" />
+                    <span>Unlock {pdf.price}</span>
+                  </button>
+                </div>
+              </div>
             </motion.div>
           ))}
         </motion.div>
@@ -297,7 +271,7 @@ export default function PaidPDFs() {
               <span className="text-[#016737]">Try a free sample first.</span>
             </p>
             <p className="text-sm text-[#687269] mt-1">
-              Every paid PDF comes with a free 20-question preview — no login required.
+              Every paid note set comes with a free 20-question preview — no login required.
             </p>
           </div>
           <motion.button

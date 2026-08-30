@@ -28,10 +28,10 @@ const plans = [
     badge: "BEST VALUE • SAVE 60%",
     price: "₹199",
     period: "per month (billed ₹2,388/yr)",
-    description: "Unlimited access to all paid PDFs & test series.",
+    description: "Unlimited access to all paid notes & test series.",
     featuresHeader: "Everything in FREE, plus:",
     features: [
-      "All paid chapter PDFs unlocked",
+      "All paid chapter notes unlocked",
       "1,500+ practice MCQs",
       "Full NEET mock test series",
       "AIR rank analytics dashboard",
@@ -50,7 +50,7 @@ const plans = [
     description: "Full access with no long-term commitment.",
     featuresHeader: "Everything in FREE, plus:",
     features: [
-      "All paid chapter PDFs unlocked",
+      "All paid chapter notes unlocked",
       "1,500+ practice MCQs",
       "Topic-wise test papers",
       "Cancel anytime flexibility",

@@ -1,16 +1,13 @@
 "use client";
 
-import { motion, useScroll, useTransform } from "framer-motion";
-import { Search, Leaf, RotateCcw } from "lucide-react";
+import { motion, AnimatePresence } from "framer-motion";
+import { Search, Leaf, Menu, X } from "lucide-react";
 import { useState, useEffect } from "react";
 
-interface NavbarProps {
-  onReplayPreloader?: () => void;
-}
-
-export default function Navbar({ onReplayPreloader }: NavbarProps) {
+export default function Navbar() {
   const [activeTab, setActiveTab] = useState("Home");
   const [scrolled, setScrolled] = useState(false);
+  const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
 
   // Detect scroll for dynamic glass intensity
   useEffect(() => {
@@ -20,14 +17,16 @@ export default function Navbar({ onReplayPreloader }: NavbarProps) {
   }, []);
 
   const navLinks = [
-    { name: "Home", href: "#home" },
-    { name: "Notes", href: "#notes" },
-    { name: "Pricing", href: "#pricing" },
+    { name: "Notes", href: "/#notes" },
+    { name: "Pricing", href: "/#pricing" },
+    { name: "Chapters", href: "/chapters", isHighlight: true },
+    { name: "About Us", href: "/#about" },
+    { name: "Founder's Story", href: "/#founder-story" },
   ];
 
   return (
     <motion.header
-      className="fixed top-0 left-0 right-0 z-40 px-4 md:px-6 py-4 transition-all duration-500"
+      className="fixed top-0 left-0 right-0 z-40 px-3 md:px-6 py-3 md:py-4 transition-all duration-500"
       style={{
         background: scrolled ? "rgba(255,255,255,0.0)" : "transparent",
       }}
@@ -36,11 +35,11 @@ export default function Navbar({ onReplayPreloader }: NavbarProps) {
       transition={{ duration: 0.8, delay: 0.2, ease: [0.16, 1, 0.3, 1] }}
     >
       <div
-        className="max-w-7xl mx-auto rounded-2xl px-6 py-3.5 flex items-center justify-between border transition-all duration-500"
+        className="max-w-7xl mx-auto rounded-2xl px-4 md:px-6 py-3 flex items-center justify-between border transition-all duration-500 gap-2 relative"
         style={{
-          background: scrolled ? "rgba(255,255,255,0.82)" : "rgba(255,255,255,0.65)",
-          backdropFilter: scrolled ? "blur(24px) saturate(200%)" : "blur(16px) saturate(160%)",
-          WebkitBackdropFilter: scrolled ? "blur(24px) saturate(200%)" : "blur(16px) saturate(160%)",
+          background: scrolled ? "rgba(255,255,255,0.92)" : "rgba(255,255,255,0.85)",
+          backdropFilter: "blur(24px) saturate(200%)",
+          WebkitBackdropFilter: "blur(24px) saturate(200%)",
           boxShadow: scrolled
             ? "0 10px 40px rgba(1,103,55,0.1), 0 0 0 1px rgba(255,255,255,0.6) inset"
             : "0 4px 16px rgba(1,103,55,0.05)",
@@ -48,76 +47,113 @@ export default function Navbar({ onReplayPreloader }: NavbarProps) {
         }}
       >
         {/* LOGO */}
-        <a href="#home" className="flex items-center gap-2.5 group">
+        <a href="/#home" className="flex items-center gap-2 group shrink-0">
           <div className="w-9 h-9 rounded-xl bg-[#016737] flex items-center justify-center text-white shadow-md group-hover:scale-105 transition-transform duration-300">
             <Leaf className="w-5 h-5 text-[#8BC43F] stroke-[2.5]" />
           </div>
-          <span className="text-xl font-bold tracking-tight text-[#016737] font-sans">
+          <span className="text-lg md:text-xl font-bold tracking-tight text-[#016737] font-sans">
             Bio <span className="text-[#8BC43F]">Vriksha</span>
           </span>
         </a>
 
-        {/* MIDDLE NAV LINKS */}
-        <nav className="hidden md:flex items-center gap-1 bg-[#F8F9FA]/80 p-1.5 rounded-full border border-gray-200/50">
+        {/* MIDDLE NAV LINKS — Desktop */}
+        <nav className="hidden lg:flex items-center justify-center mx-auto gap-8">
           {navLinks.map((link) => {
             const isActive = activeTab === link.name;
+            const isChapters = link.name === "Chapters";
             return (
               <a
                 key={link.name}
                 href={link.href}
                 onClick={() => setActiveTab(link.name)}
-                className={`relative px-5 py-1.5 rounded-full text-sm font-medium transition-colors duration-200 ${
-                  isActive ? "text-[#016737]" : "text-[#687269] hover:text-[#2B2F2C]"
+                className={`relative text-xs lg:text-sm transition-colors duration-200 whitespace-nowrap ${
+                  isChapters
+                    ? "text-[#8BC43F] font-bold hover:text-[#016737]"
+                    : isActive
+                    ? "text-[#016737] font-bold"
+                    : "text-[#4B5563] font-semibold hover:text-[#016737]"
                 }`}
               >
-                {isActive && (
-                  <motion.div
-                    layoutId="activeNavBg"
-                    className="absolute inset-0 rounded-full bg-white shadow-sm border border-gray-200/60"
-                    transition={{ type: "spring", stiffness: 380, damping: 30 }}
-                  />
-                )}
-                <span className="relative z-10">{link.name}</span>
+                {link.name}
               </a>
             );
           })}
         </nav>
 
         {/* RIGHT SIDE ACTIONS */}
-        <div className="flex items-center gap-3">
-          {/* Optional Replay Preloader Button */}
-          {onReplayPreloader && (
-            <motion.button
-              onClick={onReplayPreloader}
-              title="Replay Intro Curtain Animation"
-              whileHover={{ scale: 1.05 }}
-              whileTap={{ scale: 0.95 }}
-              className="p-2.5 rounded-full text-[#687269] hover:text-[#016737] hover:bg-[#F8F9FA] transition-colors"
-            >
-              <RotateCcw className="w-4 h-4" />
-            </motion.button>
-          )}
-
+        <div className="flex items-center gap-2 sm:gap-3 shrink-0">
           {/* SEARCH BUTTON */}
           <motion.button
             whileHover={{ scale: 1.05 }}
             whileTap={{ scale: 0.95 }}
-            className="p-2.5 rounded-full text-[#2B2F2C] hover:text-[#016737] hover:bg-[#F8F9FA] transition-colors"
+            className="p-2 sm:p-2.5 rounded-full text-[#2B2F2C] hover:text-[#016737] hover:bg-[#F8F9FA] transition-colors"
             aria-label="Search"
           >
-            <Search className="w-5 h-5 stroke-[2]" />
+            <Search className="w-4 sm:w-5 h-4 sm:h-5 stroke-[2]" />
           </motion.button>
 
           {/* LOGIN BUTTON */}
           <motion.button
             whileHover={{ scale: 1.05, backgroundColor: "#016737", color: "#FFFFFF" }}
             whileTap={{ scale: 0.96 }}
-            className="px-5 py-2 rounded-full border-2 border-[#016737] text-[#016737] text-sm font-semibold transition-all duration-300 shadow-sm"
+            className="hidden sm:block px-4 sm:px-5 py-1.5 sm:py-2 rounded-full border-2 border-[#016737] text-[#016737] text-xs sm:text-sm font-semibold transition-all duration-300 shadow-sm"
           >
             Login
           </motion.button>
+
+          {/* MOBILE HAMBURGER TOGGLE BUTTON */}
+          <button
+            onClick={() => setMobileMenuOpen(!mobileMenuOpen)}
+            className="lg:hidden p-2 rounded-xl text-[#016737] hover:bg-gray-100 transition-colors"
+            aria-label="Toggle navigation menu"
+          >
+            {mobileMenuOpen ? <X className="w-6 h-6" /> : <Menu className="w-6 h-6" />}
+          </button>
         </div>
       </div>
+
+      {/* MOBILE NAV DROPDOWN MENU */}
+      <AnimatePresence>
+        {mobileMenuOpen && (
+          <motion.div
+            initial={{ opacity: 0, y: -10, scale: 0.98 }}
+            animate={{ opacity: 1, y: 0, scale: 1 }}
+            exit={{ opacity: 0, y: -10, scale: 0.98 }}
+            transition={{ duration: 0.2 }}
+            className="lg:hidden max-w-7xl mx-auto mt-2 rounded-2xl bg-white/95 backdrop-blur-2xl border border-gray-200/80 p-4 shadow-xl flex flex-col gap-3"
+          >
+            {navLinks.map((link) => {
+              const isChapters = link.name === "Chapters";
+              return (
+                <a
+                  key={link.name}
+                  href={link.href}
+                  onClick={() => {
+                    setActiveTab(link.name);
+                    setMobileMenuOpen(false);
+                  }}
+                  className={`px-4 py-2.5 rounded-xl text-sm font-bold transition-all ${
+                    isChapters
+                      ? "bg-[#8BC43F]/15 text-[#016737] border border-[#8BC43F]/30"
+                      : "text-gray-700 hover:bg-gray-50 hover:text-[#016737]"
+                  }`}
+                >
+                  {link.name}
+                </a>
+              );
+            })}
+
+            <div className="pt-2 border-t border-gray-100 flex items-center justify-between">
+              <button
+                onClick={() => setMobileMenuOpen(false)}
+                className="w-full py-2.5 rounded-xl bg-[#016737] text-white text-xs font-bold text-center shadow-sm"
+              >
+                Login
+              </button>
+            </div>
+          </motion.div>
+        )}
+      </AnimatePresence>
     </motion.header>
   );
 }

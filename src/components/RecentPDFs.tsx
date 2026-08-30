@@ -131,20 +131,13 @@ export default function RecentPDFs() {
           style={{ x: smoothTitleX, opacity: titleOpacity }}
           className="mb-14"
         >
-          <div className="flex items-center gap-3 mb-4">
-            <div className="w-1 h-8 rounded-full bg-[#8BC43F]" />
-            <span className="text-sm font-semibold text-[#8BC43F] uppercase tracking-[0.15em]">
-              Free Resources
-            </span>
-          </div>
-
           <div className="flex flex-col md:flex-row md:items-end md:justify-between gap-4">
             <div>
               <h2 className="text-4xl md:text-5xl font-bold text-[#016737] leading-tight">
                 Recent PDF&rsquo;s
               </h2>
               <p className="mt-3 text-[#687269] text-base md:text-lg max-w-xl leading-relaxed">
-                Handcrafted NCERT notes, chapter by chapter. Download free. No login required.
+                Handcrafted NCERT notes, chapter summaries, and practice question sets for NEET preparation.
               </p>
             </div>
             <motion.a
@@ -169,67 +162,45 @@ export default function RecentPDFs() {
           className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6"
         >
           {freePDFs.map((pdf) => (
-            <motion.div key={pdf.id} variants={cardVariants}>
-              <TiltCard className="h-full">
-                <div className="bg-white rounded-2xl border border-[#E8EDE8] shadow-card group cursor-pointer overflow-hidden flex flex-col h-full">
-                  {/* Accent top strip */}
-                  <div
-                    className="h-1.5 w-full"
-                    style={{ background: `linear-gradient(90deg, ${pdf.accent}, ${pdf.accent === "#8BC43F" ? "#016737" : "#8BC43F"})` }}
-                  />
+            <motion.div
+              key={pdf.id}
+              variants={cardVariants}
+              whileHover={{ y: -3 }}
+              transition={{ duration: 0.2 }}
+              className="h-full"
+            >
+              <div className="bg-white rounded-2xl border border-gray-200 hover:border-[#016737]/30 group cursor-pointer overflow-hidden flex flex-col h-full transition-all duration-200">
+                {/* Accent top strip */}
+                <div
+                  className="h-1 w-full"
+                  style={{ background: `linear-gradient(90deg, ${pdf.accent}, ${pdf.accent === "#8BC43F" ? "#016737" : "#8BC43F"})` }}
+                />
 
-                  <div className="p-6 flex flex-col gap-4 flex-1">
-                    {/* Icon */}
-                    <div className="w-12 h-12 rounded-xl bg-[#F8F9FA] group-hover:bg-[#016737]/8 flex items-center justify-center transition-colors duration-300">
-                      <FileText
-                        className="w-6 h-6 transition-colors duration-300 group-hover:text-[#016737]"
-                        style={{ color: "#016737", strokeWidth: 1.8 }}
-                      />
-                    </div>
-
-                    <div className="flex-1">
-                      <p className="text-xs font-semibold text-[#8BC43F] uppercase tracking-wider mb-1.5">
-                        {pdf.chapter}
-                      </p>
-                      <h3 className="text-base font-semibold text-[#2B2F2C] leading-snug group-hover:text-[#016737] transition-colors duration-200">
-                        {pdf.subject}
-                      </h3>
-                    </div>
-
-                    {/* Meta */}
-                    <div className="flex items-center gap-3 text-xs text-[#687269]">
-                      <span className="flex items-center gap-1">
-                        <BookOpen className="w-3.5 h-3.5" style={{ strokeWidth: 1.8 }} />
-                        {pdf.pages}
-                      </span>
-                      <span className="flex items-center gap-1">
-                        <Clock className="w-3.5 h-3.5" style={{ strokeWidth: 1.8 }} />
-                        {pdf.readTime}
-                      </span>
-                      <span className="flex items-center gap-1 ml-auto">
-                        <Eye className="w-3.5 h-3.5" style={{ strokeWidth: 1.8 }} />
-                        {pdf.views}
-                      </span>
-                    </div>
-                  </div>
-
-                  {/* Footer */}
-                  <div className="px-6 pb-5 flex items-center justify-between">
-                    {/* Pulsing FREE badge */}
-                    <span className="badge-pulse px-3 py-1 rounded-full bg-[#8BC43F] text-white text-xs font-bold tracking-wide">
-                      FREE
-                    </span>
-
-                    <motion.button
-                      whileHover={{ scale: 1.07 }}
-                      whileTap={{ scale: 0.95 }}
-                      className="btn-shimmer text-xs font-semibold text-[#016737] border border-[#016737]/30 px-3.5 py-1.5 rounded-full hover:bg-[#014d29] hover:text-white hover:border-transparent focus:ring-2 focus:ring-[#8BC43F] transition-all duration-200"
-                    >
-                      Download
-                    </motion.button>
+                <div className="p-6 flex flex-col gap-3 flex-1">
+                  <div className="flex-1">
+                    <p className="text-xs font-semibold text-[#016737] uppercase tracking-wider mb-1.5">
+                      {pdf.chapter}
+                    </p>
+                    <h3 className="text-base font-bold text-[#111827] leading-snug group-hover:text-[#016737] transition-colors duration-200">
+                      {pdf.subject}
+                    </h3>
+                    <p className="text-xs text-gray-500 mt-2 font-normal">
+                      NCERT Complete Chapter Notes ({pdf.pages})
+                    </p>
                   </div>
                 </div>
-              </TiltCard>
+
+                {/* Footer */}
+                <div className="px-6 pb-5 flex items-center justify-between pt-3 border-t border-gray-100">
+                  <span className="text-xs font-semibold text-gray-500">
+                    Free PDF
+                  </span>
+
+                  <button className="text-xs font-bold text-[#016737] border border-[#016737]/30 px-4 py-1.5 rounded-full group-hover:bg-[#016737] group-hover:text-white transition-all duration-200">
+                    Download
+                  </button>
+                </div>
+              </div>
             </motion.div>
           ))}
         </motion.div>

@@ -14,6 +14,7 @@ import FAQSection from "@/components/FAQSection";
 import Footer from "@/components/Footer";
 import IntroVideo from "@/components/IntroVideo";
 import ReviewsSection from "@/components/ReviewsSection";
+import WhatsAppButton from "@/components/WhatsAppButton";
 
 export default function Home() {
   const [showPreloader, setShowPreloader] = useState(true);
@@ -27,7 +28,7 @@ export default function Home() {
 
       {/* PHASE 2+: MAIN PAGE CONTENT */}
       <div className={`transition-opacity duration-700 ${showPreloader ? "opacity-0 pointer-events-none" : "opacity-100"}`}>
-        <Navbar onReplayPreloader={() => setShowPreloader(true)} />
+        <Navbar />
         <HeroSection />
         <RecentPDFs />
         <PaidPDFs />
@@ -39,6 +40,7 @@ export default function Home() {
         <SubscriptionPlans />
         <FAQSection />
         <Footer />
+        <WhatsAppButton />
       </div>
     </main>
   );

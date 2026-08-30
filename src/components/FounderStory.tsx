@@ -4,7 +4,7 @@ import { motion } from "framer-motion";
 
 export default function FounderStory() {
   return (
-    <section id="about" className="relative bg-[#F4F3F0] py-20 md:py-28 overflow-hidden">
+    <section id="founder-story" className="relative bg-[#F4F3F0] py-20 md:py-28 overflow-hidden">
       <div className="max-w-6xl mx-auto px-6 md:px-12 relative min-h-[500px] md:min-h-[580px] flex items-center">
         
         {/* RIGHT SIDE PORTRAIT IMAGE (Spans top to bottom on the right side) */}
