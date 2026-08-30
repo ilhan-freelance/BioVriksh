@@ -2,7 +2,7 @@
 
 import { motion, AnimatePresence } from "framer-motion";
 import { useEffect, useState } from "react";
-import DoctorElephant from "@/components/DoctorElephant";
+import { Leaf, Dna, Sparkles } from "lucide-react";
 
 interface PreloaderProps {
   onComplete: () => void;
@@ -10,15 +10,15 @@ interface PreloaderProps {
 
 export default function Preloader({ onComplete }: PreloaderProps) {
   // Sequence stages:
-  // "elephant"  (0.0s - 2.4s): Big 3D elephant drops, squishes, bounces, waves & says "Hii!"
-  // "brand"     (2.4s - 3.8s): "Bio Vriksha" brand name with gradient glow
-  // "opening"   (3.8s - 5.0s): Curtains slide open revealing the main page
-  const [stage, setStage] = useState<"elephant" | "brand" | "opening">("elephant");
+  // "intro"    (0.0s - 2.0s): Glowing 3D Bio Vriksha Leaf emblem drops & pulses
+  // "brand"    (2.0s - 3.4s): "Bio Vriksha" brand name with gradient glow
+  // "opening"  (3.4s - 4.4s): Curtains slide open revealing the main page
+  const [stage, setStage] = useState<"intro" | "brand" | "opening">("intro");
 
   useEffect(() => {
-    const timer1 = setTimeout(() => setStage("brand"), 2400);
-    const timer2 = setTimeout(() => setStage("opening"), 3800);
-    const timer3 = setTimeout(() => onComplete(), 5000);
+    const timer1 = setTimeout(() => setStage("brand"), 2000);
+    const timer2 = setTimeout(() => setStage("opening"), 3400);
+    const timer3 = setTimeout(() => onComplete(), 4400);
 
     return () => {
       clearTimeout(timer1);
@@ -36,7 +36,7 @@ export default function Preloader({ onComplete }: PreloaderProps) {
         className="absolute top-0 left-0 w-1/2 h-full bg-white z-10 flex items-center justify-end"
         initial={{ x: "0%" }}
         animate={{ x: stage === "opening" ? "-100%" : "0%" }}
-        transition={{ duration: 1.2, ease: curtainEase }}
+        transition={{ duration: 1.0, ease: curtainEase }}
         style={{
           boxShadow:
             stage === "opening"
@@ -52,7 +52,7 @@ export default function Preloader({ onComplete }: PreloaderProps) {
         className="absolute top-0 right-0 w-1/2 h-full bg-white z-10 flex items-center justify-start"
         initial={{ x: "0%" }}
         animate={{ x: stage === "opening" ? "100%" : "0%" }}
-        transition={{ duration: 1.2, ease: curtainEase }}
+        transition={{ duration: 1.0, ease: curtainEase }}
         style={{
           boxShadow:
             stage === "opening"
@@ -66,71 +66,56 @@ export default function Preloader({ onComplete }: PreloaderProps) {
       {/* ── CENTER STAGE ── */}
       <div className="relative z-20 pointer-events-auto flex flex-col items-center justify-center">
         <AnimatePresence mode="wait">
-          {/* ═══ STAGE 1: BIG 3D ELEPHANT JUMP ANIMATION ═══ */}
-          {stage === "elephant" && (
+          {/* ═══ STAGE 1: GLOWING 3D BIO VRIKSHA LEAF EMBLEM ═══ */}
+          {stage === "intro" && (
             <motion.div
-              key="elephant-stage"
+              key="intro-stage"
               className="flex flex-col items-center justify-center"
               exit={{ scale: 0.4, opacity: 0, filter: "blur(10px)" }}
               transition={{ duration: 0.4 }}
             >
-              {/* Big elephant drops from top, squishes on landing, bounces, waves */}
               <motion.div
-                initial={{ y: -350, opacity: 0 }}
+                initial={{ scale: 0.2, opacity: 0, rotate: -20 }}
                 animate={{
-                  y: [-350, 20, 20, -60, 0, -25, 0],
-                  scaleY: [1, 0.65, 1.15, 0.95, 1.05, 0.98, 1],
-                  scaleX: [1, 1.35, 0.88, 1.05, 0.97, 1.02, 1],
-                  opacity: [0, 1, 1, 1, 1, 1, 1],
-                  rotate: [0, 0, -8, 10, -5, 3, 0],
+                  scale: [0.2, 1.15, 1],
+                  opacity: 1,
+                  rotate: [ -20, 5, 0 ],
                 }}
                 transition={{
-                  duration: 2.0,
-                  times: [0, 0.35, 0.5, 0.65, 0.78, 0.9, 1],
-                  ease: ["easeIn", "easeInOut", "easeOut", "easeInOut", "easeOut", "easeInOut", "easeOut"],
+                  duration: 0.8,
+                  ease: [0.16, 1, 0.3, 1],
                 }}
                 className="relative flex items-center justify-center"
               >
-                {/* Outer ambient glow */}
+                {/* Ambient glow rings */}
                 <motion.div
                   animate={{
-                    scale: [1, 1.15, 1],
-                    opacity: [0.4, 0.7, 0.4],
+                    scale: [1, 1.25, 1],
+                    opacity: [0.4, 0.8, 0.4],
                   }}
-                  transition={{ duration: 2, repeat: Infinity, ease: "easeInOut" }}
-                  className="absolute inset-[-40px] rounded-full bg-gradient-to-tr from-[#016737]/20 via-[#8BC43F]/15 to-[#E8A63C]/10 blur-3xl"
+                  transition={{ duration: 1.5, repeat: Infinity, ease: "easeInOut" }}
+                  className="absolute inset-[-30px] rounded-full bg-gradient-to-tr from-[#016737]/30 via-[#8BC43F]/25 to-[#016737]/15 blur-3xl"
                 />
 
-                {/* Secondary ring glow */}
-                <motion.div
-                  animate={{
-                    scale: [1, 1.08, 1],
-                    opacity: [0.3, 0.5, 0.3],
-                  }}
-                  transition={{ duration: 1.5, repeat: Infinity, ease: "easeInOut", delay: 0.3 }}
-                  className="absolute inset-[-20px] rounded-full bg-gradient-to-br from-[#8BC43F]/25 to-[#016737]/15 blur-2xl"
-                />
-
-                {/* THE BIG DOCTOR ELEPHANT – takes center stage */}
-                <DoctorElephant
-                  className="w-80 h-80 sm:w-96 sm:h-96 md:w-[480px] md:h-[480px] drop-shadow-[0_20px_50px_rgba(1,103,55,0.3)]"
-                />
+                {/* 3D Bio Vriksha Badge */}
+                <div className="w-28 h-28 sm:w-36 sm:h-36 rounded-3xl bg-gradient-to-br from-[#016737] to-[#014d29] flex items-center justify-center text-white shadow-2xl border-2 border-[#8BC43F]/40 relative">
+                  <Leaf className="w-16 h-16 sm:w-20 sm:h-20 text-[#8BC43F] stroke-[2.5]" />
+                  <motion.div
+                    animate={{ rotate: 360 }}
+                    transition={{ duration: 8, repeat: Infinity, ease: "linear" }}
+                    className="absolute inset-0 rounded-3xl border border-dashed border-[#8BC43F]/60 pointer-events-none"
+                  />
+                </div>
               </motion.div>
 
-              {/* Impact shadow on ground – synced with bounce */}
-              <motion.div
-                initial={{ scaleX: 0.15, scaleY: 0.5, opacity: 0 }}
-                animate={{
-                  scaleX: [0.15, 1.6, 0.7, 1.1, 0.85, 1, 0.95],
-                  scaleY: [0.5, 1, 0.8, 1, 0.9, 1, 1],
-                  opacity: [0, 0.5, 0.25, 0.4, 0.3, 0.35, 0.3],
-                }}
-                transition={{
-                  duration: 2.0,
-                  times: [0, 0.35, 0.5, 0.65, 0.78, 0.9, 1],
-                }}
-                className="w-40 h-4 bg-black/12 rounded-full blur-md -mt-2"
-              />
+              <motion.p
+                initial={{ opacity: 0, y: 10 }}
+                animate={{ opacity: 1, y: 0 }}
+                transition={{ delay: 0.4, duration: 0.5 }}
+                className="mt-6 text-sm font-semibold tracking-widest uppercase text-[#016737]"
+              >
+                NEET Biology Learning Platform
+              </motion.p>
             </motion.div>
           )}
 
@@ -139,22 +124,22 @@ export default function Preloader({ onComplete }: PreloaderProps) {
             <motion.div
               key="brand-stage"
               className="flex flex-col items-center justify-center text-center px-4"
-              initial={{ y: -80, opacity: 0, filter: "blur(16px)", scale: 1.15 }}
+              initial={{ y: -60, opacity: 0, filter: "blur(12px)", scale: 1.1 }}
               animate={{ y: 0, opacity: 1, filter: "blur(0px)", scale: 1 }}
               exit={{ opacity: 0, scale: 0.9, filter: "blur(8px)" }}
-              transition={{ duration: 0.8, ease: [0.16, 1, 0.3, 1] }}
+              transition={{ duration: 0.7, ease: [0.16, 1, 0.3, 1] }}
             >
               {/* Ambient glow behind text */}
               <div className="absolute inset-0 flex items-center justify-center pointer-events-none">
-                <div className="w-[400px] h-[200px] bg-gradient-to-r from-[#016737]/15 via-[#8BC43F]/10 to-[#E8A63C]/15 blur-[80px] rounded-full" />
+                <div className="w-[350px] h-[180px] bg-gradient-to-r from-[#016737]/15 via-[#8BC43F]/10 to-[#016737]/15 blur-[60px] rounded-full" />
               </div>
 
               <h1
-                className="relative text-7xl md:text-9xl font-extrabold tracking-tight drop-shadow-[0_8px_32px_rgba(1,103,55,0.25)]"
+                className="relative text-6xl sm:text-8xl font-extrabold tracking-tight drop-shadow-[0_8px_32px_rgba(1,103,55,0.25)]"
                 style={{
                   fontFamily: "'Poppins', sans-serif",
                   backgroundImage:
-                    "linear-gradient(135deg, #016737 0%, #016737 40%, #8BC43F 70%, #E8A63C 100%)",
+                    "linear-gradient(135deg, #016737 0%, #016737 45%, #8BC43F 80%, #016737 100%)",
                   WebkitBackgroundClip: "text",
                   WebkitTextFillColor: "transparent",
                 }}
