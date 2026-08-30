@@ -146,14 +146,14 @@ export default function HeroSection() {
         </motion.div>
       </div>
 
-      {/* ── MOBILE HERO VISUAL (Clean & Responsive) ── */}
-      <div className="lg:hidden w-full mt-4 relative h-[240px] sm:h-[300px] overflow-hidden">
+      {/* ── MOBILE HERO BACKGROUND VISUAL (Behind text) ── */}
+      <div className="lg:hidden absolute inset-0 z-0 pointer-events-none overflow-hidden" aria-hidden="true">
         <img
           src="/hero_premium_clean.png"
-          alt="BioVriksha NEET Biology"
-          className="w-full h-full object-cover object-top opacity-90"
+          alt=""
+          className="w-full h-full object-cover object-center opacity-25"
         />
-        <div className="absolute inset-0 bg-gradient-to-t from-white via-white/40 to-transparent" />
+        <div className="absolute inset-0 bg-gradient-to-b from-white/80 via-white/60 to-white" />
       </div>
     </section>
   );

@@ -381,50 +381,66 @@ export default function ChaptersPage() {
           {filteredChapters.map((ch) => (
             <motion.div
               key={ch.id}
-              whileHover={{ y: -2 }}
-              transition={{ duration: 0.15 }}
+              whileHover={{ y: -4 }}
+              transition={{ duration: 0.2 }}
               onClick={() => {
                 setActiveChapter(ch);
                 setActiveTab("NOTES");
                 setSelectedAnswers({});
                 setSubmittedQuiz(false);
               }}
-              className="bg-white rounded-2xl border border-gray-200 hover:border-[#016737]/40 transition-all duration-200 p-6 flex flex-col justify-between cursor-pointer group relative overflow-hidden"
+              className="bg-white rounded-2xl border border-gray-200 hover:border-[#016737]/40 shadow-xs hover:shadow-md transition-all duration-300 overflow-hidden flex flex-col h-full group cursor-pointer"
             >
-              {/* Header Badge */}
-              <div className="flex items-center justify-between mb-4">
-                <span className="text-xs font-bold px-2.5 py-1 rounded-md bg-[#f6fdf0] text-[#016737] border border-[#8BC43F]/30">
-                  {ch.classLevel}
-                </span>
-                <span className="inline-flex items-center gap-1 text-xs font-bold text-emerald-700 bg-emerald-50 px-2.5 py-1 rounded-full border border-emerald-200">
-                  <CheckCircle2 className="w-3.5 h-3.5 text-emerald-600" />
-                  Free Short Notes
-                </span>
+              {/* TOP 50% — BIOLOGY THUMBNAIL IMAGE BANNER */}
+              <div className="h-44 relative overflow-hidden bg-gradient-to-br from-[#016737]/10 to-[#8BC43F]/20">
+                <img
+                  src="/hero_premium_clean.png"
+                  alt={ch.title}
+                  className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500"
+                />
+                <div className="absolute inset-0 bg-gradient-to-t from-black/60 via-transparent to-transparent" />
+                
+                {/* Header Badge */}
+                <div className="absolute top-3 left-3 flex items-center gap-2">
+                  <span className="text-xs font-bold px-2.5 py-1 rounded-md bg-[#016737] text-white shadow-xs">
+                    {ch.classLevel}
+                  </span>
+                </div>
+
+                <div className="absolute top-3 right-3">
+                  <span className="inline-flex items-center gap-1 text-xs font-bold bg-[#8BC43F] text-[#111827] px-2.5 py-1 rounded-full shadow-xs">
+                    <CheckCircle2 className="w-3.5 h-3.5" />
+                    Free Notes
+                  </span>
+                </div>
+
+                <div className="absolute bottom-3 left-3 right-3">
+                  <span className="text-[11px] font-bold text-white/90 uppercase tracking-wider bg-black/40 backdrop-blur-md px-2.5 py-1 rounded-md">
+                    {ch.unit}
+                  </span>
+                </div>
               </div>
 
-              {/* Title & Unit */}
-              <div className="mb-5">
-                <p className="text-xs font-semibold text-gray-400 uppercase tracking-wider mb-1">
-                  {ch.unit}
-                </p>
-                <h3 className="text-xl font-extrabold text-[#111827] group-hover:text-[#016737] transition-colors leading-snug">
-                  {ch.title}
-                </h3>
-                <p className="text-xs text-gray-500 mt-2 line-clamp-2 leading-relaxed font-normal">
-                  {ch.summary}
-                </p>
-              </div>
+              {/* BOTTOM 50% — DETAILS */}
+              <div className="p-5 flex flex-col justify-between flex-1 gap-4">
+                <div>
+                  <h3 className="text-lg font-bold text-[#111827] leading-snug group-hover:text-[#016737] transition-colors">
+                    {ch.title}
+                  </h3>
+                  <p className="text-xs text-gray-500 mt-2 line-clamp-2 leading-relaxed">
+                    {ch.summary}
+                  </p>
+                </div>
 
-              {/* Footer Meta */}
-              <div className="pt-4 border-t border-gray-100 flex items-center justify-between text-xs text-gray-500 font-medium">
-                <span className="flex items-center gap-1">
-                  <FileText className="w-3.5 h-3.5 text-[#016737]" />
-                  {ch.pdfPages} Pages
-                </span>
-                <span className="flex items-center gap-1 text-[#016737] font-bold group-hover:translate-x-1 transition-transform">
-                  Read Short Notes
-                  <ChevronRight className="w-4 h-4" />
-                </span>
+                <div className="pt-3 border-t border-gray-100 flex items-center justify-between text-xs text-gray-500 font-medium">
+                  <span className="flex items-center gap-1">
+                    <FileText className="w-3.5 h-3.5 text-[#016737]" />
+                    {ch.pdfPages} Pages
+                  </span>
+                  <span className="flex items-center gap-1 text-[#016737] font-bold group-hover:translate-x-1 transition-transform">
+                    View Chapter Notes &rarr;
+                  </span>
+                </div>
               </div>
             </motion.div>
           ))}
@@ -498,7 +514,7 @@ export default function ChaptersPage() {
                   className="inline-flex items-center justify-center gap-1.5 px-3.5 py-2 sm:py-1.5 rounded-full bg-[#016737] text-white text-xs font-bold hover:bg-[#014d29] transition-colors shadow-sm my-1 sm:my-0"
                 >
                   <Lock className="w-3 h-3" />
-                  <span>Unlock Practice &amp; PDF ({activeChapter.price || "₹49"})</span>
+                  <span>Unlock Practice &amp; Full Notes ({activeChapter.price || "₹49"})</span>
                 </button>
               </div>
 

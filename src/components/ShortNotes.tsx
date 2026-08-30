@@ -142,93 +142,87 @@ export default function ShortNotes() {
       <div className="absolute top-0 left-8 right-8 h-px bg-gradient-to-r from-transparent via-[#8BC43F]/30 to-transparent" />
 
       <div className="max-w-7xl mx-auto px-4 md:px-8">
-        {/* SECTION HEADER */}
+        {/* SECTION HEADER — Clean Responsive Fade (No Left Cut-Off) */}
         <motion.div
-          style={{ x: smoothTitleX, opacity: titleOpacity }}
-          className="mb-14"
+          style={{ opacity: titleOpacity }}
+          className="mb-12"
         >
-          <div className="flex items-center gap-3 mb-4">
-            <div className="w-1 h-8 rounded-full bg-[#8BC43F]" />
-            <span className="text-sm font-semibold text-[#8BC43F] uppercase tracking-[0.15em]">
+          <div className="flex items-center gap-3 mb-3">
+            <div className="w-1 h-7 rounded-full bg-[#8BC43F]" />
+            <span className="text-xs sm:text-sm font-semibold text-[#8BC43F] uppercase tracking-[0.15em]">
               Quick Revision
             </span>
           </div>
           <div className="flex flex-col md:flex-row md:items-end md:justify-between gap-4">
             <div>
-              <h2 className="text-4xl md:text-5xl font-bold text-[#016737] leading-tight tracking-tight">
+              <h2 className="text-3xl sm:text-4xl md:text-5xl font-bold text-[#016737] leading-tight tracking-tight">
                 Short Notes{" "}
-                <span className="text-[#2B2F2C] font-light italic text-3xl md:text-4xl">
-                  (Free)
+                <span className="text-[#2B2F2C] font-light italic text-2xl md:text-3xl">
+                  (100% Free)
                 </span>
               </h2>
-              <p className="mt-3 text-[#687269] text-base md:text-lg max-w-xl leading-relaxed">
+              <p className="mt-2 text-[#687269] text-sm sm:text-base max-w-xl">
                 One-pager cheatsheets designed for last-minute revision. No fluff, pure concepts.
               </p>
             </div>
-            <motion.a
-              href="#"
-              whileHover={{ x: 6 }}
-              className="inline-flex items-center gap-2 text-sm font-semibold text-[#016737] hover:text-[#8BC43F] transition-colors duration-200 whitespace-nowrap"
-            >
-              Browse all short notes
-              <svg width="16" height="16" viewBox="0 0 16 16" fill="none">
-                <path d="M3 8h10M9 4l4 4-4 4" stroke="currentColor" strokeWidth="1.8" strokeLinecap="round" strokeLinejoin="round" />
-              </svg>
-            </motion.a>
           </div>
         </motion.div>
 
-        {/* GRID */}
+        {/* GRID — 50/50 Image Top Half & Details Bottom Half */}
         <motion.div
           variants={containerVariants}
           initial="hidden"
           whileInView="visible"
           viewport={{ once: true, margin: "-60px" }}
-          className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-5"
+          className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6"
         >
           {shortNotes.map((note) => (
             <motion.div key={note.id} variants={cardVariants}>
               <TiltCard className="h-full">
-                <div
-                  className="bg-white rounded-2xl border border-[#E8EDE8] p-5 flex flex-col gap-4 cursor-pointer group transition-colors duration-300 shadow-card h-full justify-between"
-                >
-                  <div className="flex flex-col gap-3">
-                    {/* Icon Block */}
-                    <div
-                      className={`w-11 h-11 rounded-xl ${note.color} flex items-center justify-center group-hover:scale-110 transition-transform duration-300`}
-                    >
-                      <FileText
-                        className="w-5 h-5"
-                        style={{ color: note.accent, strokeWidth: 1.8 }}
-                      />
+                <div className="bg-white rounded-2xl border border-gray-200 hover:border-[#016737]/40 shadow-xs hover:shadow-md transition-all duration-300 overflow-hidden flex flex-col h-full group">
+                  {/* TOP 50% — THUMBNAIL IMAGE BANNER */}
+                  <div className="h-40 relative overflow-hidden bg-gradient-to-br from-[#016737]/10 to-[#8BC43F]/20">
+                    <img
+                      src="/hero_premium_clean.png"
+                      alt={note.title}
+                      className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500"
+                    />
+                    <div className="absolute inset-0 bg-gradient-to-t from-black/60 via-transparent to-transparent" />
+                    
+                    {/* Badge */}
+                    <div className="absolute top-3 right-3">
+                      <span className="px-3 py-1 rounded-full text-xs font-bold bg-[#8BC43F] text-[#111827] shadow-xs">
+                        FREE
+                      </span>
                     </div>
 
-                    {/* Text */}
-                    <div>
-                      <p className="text-[11px] font-semibold text-[#8BC43F] uppercase tracking-wider mb-1">
+                    <div className="absolute bottom-3 left-3 right-3">
+                      <span className="text-[11px] font-bold text-white/90 uppercase tracking-wider bg-black/40 backdrop-blur-md px-2.5 py-1 rounded-md">
                         {note.subtitle}
-                      </p>
-                      <h3 className="text-sm font-semibold text-[#2B2F2C] leading-snug group-hover:text-[#016737] transition-colors duration-200">
-                        {note.title}
-                      </h3>
+                      </span>
                     </div>
                   </div>
 
-                  {/* Meta + Pulsing FREE Badge */}
-                  <div className="flex items-center justify-between pt-3 border-t border-[#F0F4F0]">
-                    <div className="flex items-center gap-3 text-xs text-[#687269]">
-                      <span className="flex items-center gap-1">
-                        <BookOpen className="w-3 h-3" style={{ strokeWidth: 1.8 }} />
-                        {note.pages}
-                      </span>
-                      <span className="flex items-center gap-1">
-                        <Clock className="w-3 h-3" style={{ strokeWidth: 1.8 }} />
-                        {note.readTime}
-                      </span>
+                  {/* BOTTOM 50% — DETAILS & VIEW BUTTON */}
+                  <div className="p-5 flex flex-col justify-between flex-1 gap-4">
+                    <div>
+                      <h3 className="text-base font-bold text-[#111827] leading-snug group-hover:text-[#016737] transition-colors">
+                        {note.title}
+                      </h3>
+                      <p className="text-xs text-gray-500 mt-1.5 flex items-center gap-2">
+                        <span>{note.pages}</span>
+                        <span>•</span>
+                        <span>{note.readTime}</span>
+                      </p>
                     </div>
-                    <span className="badge-pulse px-2.5 py-0.5 rounded-full bg-[#8BC43F] text-white text-[10px] font-bold tracking-wide">
-                      FREE
-                    </span>
+
+                    <a
+                      href="/chapters"
+                      className="w-full py-2.5 rounded-xl border border-[#016737] text-[#016737] text-xs font-bold hover:bg-[#016737] hover:text-white transition-all flex items-center justify-center gap-1.5 shadow-2xs text-center"
+                    >
+                      <BookOpen className="w-3.5 h-3.5" />
+                      <span>View Short Note</span>
+                    </a>
                   </div>
                 </div>
               </TiltCard>

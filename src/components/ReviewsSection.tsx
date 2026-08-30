@@ -204,12 +204,18 @@ export default function ReviewsSection() {
               </div>
             </motion.div>
 
-            {/* RIGHT SIDE: VERTICAL SCROLLING CARDS */}
-            <div className="lg:col-span-7 relative h-[480px] sm:h-[520px] flex items-center justify-center">
+            {/* RIGHT SIDE: REVIEWS TRACK (Responsive Mobile & Desktop) */}
+            <div className="lg:col-span-7 relative min-h-[400px] lg:h-[520px] flex items-center justify-center">
               
-              {/* Overflowing Marquee Box */}
-              <div className="absolute -top-16 -bottom-16 left-0 right-0 overflow-hidden px-2 sm:px-4 pointer-events-auto">
-                
+              {/* MOBILE VIEW: Clean Touch-Scroll Review Stack */}
+              <div className="lg:hidden w-full space-y-4 py-2">
+                {reviews.slice(0, 3).map((item, idx) => (
+                  <ReviewCard key={`mobile-review-${idx}`} review={item} />
+                ))}
+              </div>
+
+              {/* DESKTOP VIEW: Infinite Marquee Box */}
+              <div className="hidden lg:block absolute -top-16 -bottom-16 left-0 right-0 overflow-hidden px-4 pointer-events-auto">
                 {/* Top Fade Gradient Mask */}
                 <div className="absolute top-0 inset-x-0 h-20 bg-gradient-to-b from-[#F5F4F0] via-[#F5F4F0]/80 to-transparent z-20 pointer-events-none" />
 
@@ -222,7 +228,6 @@ export default function ReviewsSection() {
                     <ReviewCard key={`scrolling-card-${idx}`} review={item} />
                   ))}
                 </div>
-
               </div>
 
             </div>
