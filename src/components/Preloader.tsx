@@ -23,7 +23,7 @@ export default function Preloader({ onComplete }: PreloaderProps) {
     };
   }, [onComplete]);
 
-  const curtainEase = [0.76, 0, 0.24, 1];
+  const curtainEase = [0.76, 0, 0.24, 1] as const;
 
   return (
     <div className="fixed inset-0 z-50 pointer-events-none flex items-center justify-center overflow-hidden">

@@ -120,7 +120,7 @@ const containerVariants = {
 
 const cardVariants = {
   hidden: { y: 48, opacity: 0 },
-  visible: { y: 0, opacity: 1, transition: { type: "spring", stiffness: 100, damping: 18 } },
+  visible: { y: 0, opacity: 1, transition: { type: "spring" as const, stiffness: 100, damping: 18 } },
 };
 
 export default function ShortNotes() {
