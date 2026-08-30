@@ -2,7 +2,6 @@
 
 import { motion, AnimatePresence } from "framer-motion";
 import { useEffect, useState } from "react";
-import { Leaf, Dna, Sparkles } from "lucide-react";
 
 interface PreloaderProps {
   onComplete: () => void;
@@ -10,20 +9,17 @@ interface PreloaderProps {
 
 export default function Preloader({ onComplete }: PreloaderProps) {
   // Sequence stages:
-  // "intro"    (0.0s - 2.0s): Glowing 3D Bio Vriksha Leaf emblem drops & pulses
-  // "brand"    (2.0s - 3.4s): "Bio Vriksha" brand name with gradient glow
-  // "opening"  (3.4s - 4.4s): Curtains slide open revealing the main page
-  const [stage, setStage] = useState<"intro" | "brand" | "opening">("intro");
+  // "brand"    (0.0s - 1.8s): "Bio Vriksha" brand name with gradient glow
+  // "opening"  (1.8s - 2.8s): Curtains slide open revealing the main page
+  const [stage, setStage] = useState<"brand" | "opening">("brand");
 
   useEffect(() => {
-    const timer1 = setTimeout(() => setStage("brand"), 2000);
-    const timer2 = setTimeout(() => setStage("opening"), 3400);
-    const timer3 = setTimeout(() => onComplete(), 4400);
+    const timer1 = setTimeout(() => setStage("opening"), 1800);
+    const timer2 = setTimeout(() => onComplete(), 2800);
 
     return () => {
       clearTimeout(timer1);
       clearTimeout(timer2);
-      clearTimeout(timer3);
     };
   }, [onComplete]);
 
@@ -66,72 +62,19 @@ export default function Preloader({ onComplete }: PreloaderProps) {
       {/* ── CENTER STAGE ── */}
       <div className="relative z-20 pointer-events-auto flex flex-col items-center justify-center">
         <AnimatePresence mode="wait">
-          {/* ═══ STAGE 1: GLOWING 3D BIO VRIKSHA LEAF EMBLEM ═══ */}
-          {stage === "intro" && (
-            <motion.div
-              key="intro-stage"
-              className="flex flex-col items-center justify-center"
-              exit={{ scale: 0.4, opacity: 0, filter: "blur(10px)" }}
-              transition={{ duration: 0.4 }}
-            >
-              <motion.div
-                initial={{ scale: 0.2, opacity: 0, rotate: -20 }}
-                animate={{
-                  scale: [0.2, 1.15, 1],
-                  opacity: 1,
-                  rotate: [ -20, 5, 0 ],
-                }}
-                transition={{
-                  duration: 0.8,
-                  ease: [0.16, 1, 0.3, 1],
-                }}
-                className="relative flex items-center justify-center"
-              >
-                {/* Ambient glow rings */}
-                <motion.div
-                  animate={{
-                    scale: [1, 1.25, 1],
-                    opacity: [0.4, 0.8, 0.4],
-                  }}
-                  transition={{ duration: 1.5, repeat: Infinity, ease: "easeInOut" }}
-                  className="absolute inset-[-30px] rounded-full bg-gradient-to-tr from-[#016737]/30 via-[#8BC43F]/25 to-[#016737]/15 blur-3xl"
-                />
-
-                {/* 3D Bio Vriksha Badge */}
-                <div className="w-28 h-28 sm:w-36 sm:h-36 rounded-3xl bg-gradient-to-br from-[#016737] to-[#014d29] flex items-center justify-center text-white shadow-2xl border-2 border-[#8BC43F]/40 relative">
-                  <Leaf className="w-16 h-16 sm:w-20 sm:h-20 text-[#8BC43F] stroke-[2.5]" />
-                  <motion.div
-                    animate={{ rotate: 360 }}
-                    transition={{ duration: 8, repeat: Infinity, ease: "linear" }}
-                    className="absolute inset-0 rounded-3xl border border-dashed border-[#8BC43F]/60 pointer-events-none"
-                  />
-                </div>
-              </motion.div>
-
-              <motion.p
-                initial={{ opacity: 0, y: 10 }}
-                animate={{ opacity: 1, y: 0 }}
-                transition={{ delay: 0.4, duration: 0.5 }}
-                className="mt-6 text-sm font-semibold tracking-widest uppercase text-[#016737]"
-              >
-                NEET Biology Learning Platform
-              </motion.p>
-            </motion.div>
-          )}
-
-          {/* ═══ STAGE 2: BRAND NAME "Bio Vriksha" ═══ */}
+          {/* ═══ BRAND NAME "Bio Vriksha" ═══ */}
           {stage === "brand" && (
             <motion.div
               key="brand-stage"
               className="flex flex-col items-center justify-center text-center px-4"
-              initial={{ y: -60, opacity: 0, filter: "blur(12px)", scale: 1.1 }}
+              initial={{ y: -40, opacity: 0, filter: "blur(12px)", scale: 1.08 }}
               animate={{ y: 0, opacity: 1, filter: "blur(0px)", scale: 1 }}
-              exit={{ opacity: 0, scale: 0.9, filter: "blur(8px)" }}
+              exit={{ opacity: 0, scale: 0.95, filter: "blur(8px)" }}
               transition={{ duration: 0.7, ease: [0.16, 1, 0.3, 1] }}
             >
               {/* Ambient glow behind text */}
               <div className="absolute inset-0 flex items-center justify-center pointer-events-none">
-                <div className="w-[350px] h-[180px] bg-gradient-to-r from-[#016737]/15 via-[#8BC43F]/10 to-[#016737]/15 blur-[60px] rounded-full" />
+                <div className="w-[380px] h-[180px] bg-gradient-to-r from-[#016737]/15 via-[#8BC43F]/15 to-[#016737]/15 blur-[60px] rounded-full" />
               </div>
 
               <h1
@@ -146,6 +89,15 @@ export default function Preloader({ onComplete }: PreloaderProps) {
               >
                 Bio Vriksha
               </h1>
+
+              <motion.p
+                initial={{ opacity: 0, y: 10 }}
+                animate={{ opacity: 1, y: 0 }}
+                transition={{ delay: 0.3, duration: 0.5 }}
+                className="mt-4 text-xs sm:text-sm font-semibold tracking-widest uppercase text-[#016737]/80"
+              >
+                NEET Biology Learning Platform
+              </motion.p>
             </motion.div>
           )}
         </AnimatePresence>
