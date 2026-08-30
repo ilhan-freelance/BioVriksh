@@ -130,26 +130,26 @@ export default function FAQSection() {
         </div>
       </div>
 
-      {/* ── BOTTOM TRANSPARENT BANNER WITH VISIBLE LIGHT IMAGE ─────── */}
-      <div className="relative bg-[#F4F3F0] py-20 px-6 md:px-12 overflow-hidden border-t border-gray-200">
+      {/* ── BOTTOM TRANSPARENT BANNER WITH UNIQUE LIGHT 3D BIOLOGY IMAGE ─────── */}
+      <div className="relative bg-[#FAF9F6] py-20 px-6 md:px-12 overflow-hidden border-t border-gray-200">
         {/* Clearly Visible Light Background Image on Right Side */}
         <div className="absolute right-0 top-0 bottom-0 w-full sm:w-[65%] md:w-[55%] pointer-events-none overflow-hidden">
           <img
-            src="/hero_premium_clean.png"
-            alt="Biology background"
-            className="w-full h-full object-cover opacity-75 grayscale-[10%]"
+            src="/hero_biology_no_character.png"
+            alt="BioVriksha 3D Biology Visual"
+            className="w-full h-full object-cover opacity-85"
           />
           {/* Left Fade Overlay to seamlessly blend with background */}
-          <div className="absolute inset-0 bg-gradient-to-r from-[#F4F3F0] via-[#F4F3F0]/80 to-transparent" />
+          <div className="absolute inset-0 bg-gradient-to-r from-[#FAF9F6] via-[#FAF9F6]/80 to-transparent" />
         </div>
 
-        {/* Transparent Content Area */}
+        {/* Content Area */}
         <div className="max-w-5xl mx-auto relative z-10">
           <div className="max-w-2xl">
-            <h3 className="text-3xl sm:text-4xl md:text-5xl font-extrabold text-[#111827] tracking-tight mb-3">
+            <h3 className="text-2xl sm:text-3xl md:text-4xl font-extrabold text-[#111827] tracking-tight mb-3">
               Still need help? Send us a note!
             </h3>
-            <p className="text-gray-700 text-sm sm:text-base leading-relaxed font-normal">
+            <p className="text-gray-600 text-sm sm:text-base leading-relaxed font-normal">
               For any other questions or assistance, feel free to reach out to our team directly through our contact channels.
             </p>
           </div>
