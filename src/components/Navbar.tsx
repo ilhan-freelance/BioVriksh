@@ -102,9 +102,9 @@ export default function Navbar() {
           <div className="w-24 sm:w-36 h-[1px] bg-gradient-to-r from-transparent via-[#8BC43F]/40 to-transparent rounded-full" />
         </div>
 
-        {/* ═══ BOTTOM ROW: PERFECTLY CENTER ALIGNED NAVIGATIONS ═══ */}
+        {/* ═══ BOTTOM ROW: NAVIGATIONS SHIFTED SLIGHTLY RIGHT TO ALIGN CHAPTERS UNDER NAME ═══ */}
         <div className="hidden lg:flex items-center justify-center w-full text-center pb-0.5">
-          <nav className="flex items-center justify-center gap-7 xl:gap-9 mx-auto text-center pl-10">
+          <nav className="flex items-center justify-center gap-7 xl:gap-9 mx-auto text-center pl-24 sm:pl-28">
             {navLinks.map((link) => {
               const isActive = activeTab === link.name;
               const isChapters = link.name === "Chapters";
