@@ -47,10 +47,12 @@ export default function Navbar() {
         }}
       >
         {/* LOGO */}
-        <a href="/#home" className="flex items-center gap-2 group shrink-0">
-          <div className="w-9 h-9 rounded-xl bg-[#016737] flex items-center justify-center text-white shadow-md group-hover:scale-105 transition-transform duration-300">
-            <Leaf className="w-5 h-5 text-[#8BC43F] stroke-[2.5]" />
-          </div>
+        <a href="/#home" className="flex items-center gap-2.5 group shrink-0">
+          <img
+            src="/logo.jpg"
+            alt="Bio Vriksha Logo"
+            className="w-9 h-9 sm:w-10 sm:h-10 object-contain rounded-xl shadow-xs group-hover:scale-105 transition-transform duration-300"
+          />
           <span className="text-lg md:text-xl font-bold tracking-tight text-[#016737] font-sans">
             Bio <span className="text-[#8BC43F]">Vriksha</span>
           </span>

@@ -77,8 +77,15 @@ export default function Preloader({ onComplete }: PreloaderProps) {
                 <div className="w-[380px] h-[180px] bg-gradient-to-r from-[#016737]/15 via-[#8BC43F]/15 to-[#016737]/15 blur-[60px] rounded-full" />
               </div>
 
+              {/* Official Logo Image */}
+              <img
+                src="/logo.jpg"
+                alt="Bio Vriksha Official Logo"
+                className="w-20 h-20 sm:w-24 sm:h-24 object-contain rounded-2xl mb-4 shadow-xl relative z-10"
+              />
+
               <h1
-                className="relative text-6xl sm:text-8xl font-extrabold tracking-tight drop-shadow-[0_8px_32px_rgba(1,103,55,0.25)]"
+                className="relative text-5xl sm:text-7xl font-extrabold tracking-tight drop-shadow-[0_8px_32px_rgba(1,103,55,0.25)]"
                 style={{
                   fontFamily: "'Poppins', sans-serif",
                   backgroundImage:
