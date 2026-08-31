@@ -9,13 +9,9 @@ import {
   Lock,
   Unlock,
   CheckCircle2,
-  ToggleLeft,
-  ToggleRight,
   X,
-  Sparkles,
   BookOpen,
   Pin,
-  Filter,
   Zap,
 } from "lucide-react";
 import { createClient } from "@/lib/supabase/client";
@@ -123,7 +119,6 @@ export default function AdminPDFsPage() {
       let thumbnailUrl = "/hero_biology_ultra_wow.png";
       let filePath = `notes_${Date.now()}.pdf`;
 
-      // Upload Thumbnail Image to Public Bucket 'pdf-thumbnails'
       if (thumbnailFile) {
         const thumbName = `thumb_${Date.now()}_${thumbnailFile.name}`;
         const { data: thumbData } = await supabase.storage
@@ -138,7 +133,6 @@ export default function AdminPDFsPage() {
         }
       }
 
-      // Upload PDF file to Private Bucket 'pdf-files'
       if (pdfFile) {
         const pdfFileName = `pdf_${Date.now()}_${pdfFile.name}`;
         const { data: pdfUploadData } = await supabase.storage
@@ -152,7 +146,6 @@ export default function AdminPDFsPage() {
 
       const isActuallyFree = noteType === "free" || isFree;
 
-      // Insert record into Supabase `pdfs` Table
       const newPdfRow = {
         chapter_id: chapterId || null,
         title,
@@ -242,7 +235,6 @@ export default function AdminPDFsPage() {
     }
   };
 
-  // Filtered PDFs based on tab
   const filteredPdfs = pdfs.filter((item) => {
     if (activeTabFilter === "recent") return item.is_recent;
     if (activeTabFilter === "paid") return !item.is_free;
@@ -254,29 +246,28 @@ export default function AdminPDFsPage() {
 
   return (
     <div className="space-y-6">
-      {/* ═══ GUIDANCE BANNER ═══ */}
-      <div className="bg-white border border-slate-200 p-6 rounded-3xl shadow-xs flex flex-col sm:flex-row items-start sm:items-center justify-between gap-4">
+      {/* Executive Header Banner */}
+      <div className="bg-white border border-slate-200 p-5 rounded-2xl shadow-2xs flex flex-col sm:flex-row items-start sm:items-center justify-between gap-4">
         <div>
-          <div className="inline-flex items-center gap-1.5 px-3 py-1 rounded-full bg-[#016737]/10 text-[#016737] text-xs font-black mb-2">
-            <Sparkles className="w-3.5 h-3.5 text-[#8BC43F]" />
-            <span>Categorization &amp; Placement Control</span>
-          </div>
-          <h1 className="text-xl font-black text-slate-900">Study Materials &amp; PDF Manager</h1>
-          <p className="text-xs text-slate-500 font-semibold mt-1">
-            Assign notes to Chapters, Class 11/12, set pricing model, and toggle <strong>📌 Featured in Recent</strong> to showcase any note on the homepage!
+          <h1 className="text-base font-bold text-slate-900 tracking-tight flex items-center gap-2">
+            <FileText className="w-4 h-4 text-[#016737]" />
+            <span>Study Notes &amp; PDF Manager</span>
+          </h1>
+          <p className="text-xs text-slate-500 font-medium mt-0.5">
+            Manage notes, set pricing, assign chapters, and toggle <strong>Featured in Recent</strong>.
           </p>
         </div>
 
         <button
           onClick={() => setIsModalOpen(true)}
-          className="px-5 py-3 rounded-2xl bg-[#016737] hover:bg-[#014d29] text-white text-xs font-black transition-all flex items-center gap-2 shadow-md shrink-0 hover:scale-105"
+          className="px-3.5 py-2 rounded-xl bg-[#016737] hover:bg-[#014d29] text-white text-xs font-semibold transition-all flex items-center gap-1.5 shadow-2xs shrink-0"
         >
-          <Plus className="w-4 h-4" />
-          <span>+ Upload New PDF Note</span>
+          <Plus className="w-3.5 h-3.5" />
+          <span>Upload New PDF Note</span>
         </button>
       </div>
 
-      {/* ═══ FILTER TABS ═══ */}
+      {/* Filter Tabs */}
       <div className="flex items-center gap-2 overflow-x-auto scrollbar-none pb-1">
         {[
           { id: "all", label: "All Materials", count: pdfs.length },
@@ -289,15 +280,15 @@ export default function AdminPDFsPage() {
           <button
             key={tab.id}
             onClick={() => setActiveTabFilter(tab.id)}
-            className={`px-4 py-2 rounded-2xl text-xs font-black transition-all shrink-0 flex items-center gap-2 border ${
+            className={`px-3.5 py-1.5 rounded-xl text-xs font-semibold transition-all shrink-0 flex items-center gap-1.5 border ${
               activeTabFilter === tab.id
-                ? "bg-[#016737] text-white border-[#016737] shadow-sm"
-                : "bg-white text-slate-700 border-slate-200 hover:bg-slate-50"
+                ? "bg-[#016737] text-white border-[#016737] shadow-2xs"
+                : "bg-white text-slate-600 border-slate-200 hover:bg-slate-50"
             }`}
           >
             <span>{tab.label}</span>
             <span
-              className={`text-[10px] px-2 py-0.5 rounded-full font-bold ${
+              className={`text-[10px] px-1.5 py-0.2 rounded font-bold ${
                 activeTabFilter === tab.id ? "bg-white/20 text-white" : "bg-slate-100 text-slate-600"
               }`}
             >
@@ -308,24 +299,24 @@ export default function AdminPDFsPage() {
       </div>
 
       {/* PDFs Table */}
-      <div className="bg-white border border-slate-200 rounded-3xl p-6 shadow-xs">
+      <div className="bg-white border border-slate-200 rounded-2xl p-5 shadow-2xs">
         <div className="overflow-x-auto">
           <table className="w-full text-left border-collapse text-xs">
             <thead>
-              <tr className="border-b border-slate-200 text-slate-500 uppercase font-black tracking-wider bg-slate-50">
-                <th className="py-3 px-4">Study Note Card</th>
-                <th className="py-3 px-4">Class &amp; Category</th>
-                <th className="py-3 px-4">Price Model</th>
-                <th className="py-3 px-4">📌 Homepage Recent</th>
-                <th className="py-3 px-4 text-right">1-Click Controls</th>
+              <tr className="border-b border-slate-200 text-slate-500 uppercase font-semibold text-[10px] tracking-wider bg-slate-50">
+                <th className="py-2.5 px-3">Study Note</th>
+                <th className="py-2.5 px-3">Class &amp; Type</th>
+                <th className="py-2.5 px-3">Price</th>
+                <th className="py-2.5 px-3">Recent Status</th>
+                <th className="py-2.5 px-3 text-right">Actions</th>
               </tr>
             </thead>
-            <tbody className="divide-y divide-slate-100 font-semibold text-slate-700">
+            <tbody className="divide-y divide-slate-100 text-slate-700 font-medium">
               {filteredPdfs.map((pdf) => (
-                <tr key={pdf.id} className="hover:bg-slate-50/80 transition-colors">
-                  <td className="py-4 px-4">
-                    <div className="flex items-center gap-3">
-                      <div className="w-12 h-14 rounded-xl bg-slate-100 border border-slate-200 overflow-hidden shrink-0 shadow-2xs">
+                <tr key={pdf.id} className="hover:bg-slate-50/60 transition-colors">
+                  <td className="py-3 px-3">
+                    <div className="flex items-center gap-2.5">
+                      <div className="w-10 h-12 rounded-lg bg-slate-100 border border-slate-200 overflow-hidden shrink-0 shadow-2xs">
                         <img
                           src={pdf.thumbnail_url || "/hero_biology_ultra_wow.png"}
                           alt=""
@@ -333,63 +324,63 @@ export default function AdminPDFsPage() {
                         />
                       </div>
                       <div>
-                        <h4 className="font-black text-slate-900 text-sm leading-snug">{pdf.title}</h4>
-                        <p className="text-xs text-slate-500 mt-0.5 line-clamp-1 font-semibold">
-                          {pdf.description || "High yield NCERT biology revision material."}
+                        <h4 className="font-semibold text-slate-900 text-xs leading-snug">{pdf.title}</h4>
+                        <p className="text-[11px] text-slate-500 mt-0.5 line-clamp-1 font-normal">
+                          {pdf.description || "NCERT revision note."}
                         </p>
                       </div>
                     </div>
                   </td>
-                  <td className="py-4 px-4">
-                    <div className="space-y-1">
-                      <span className="inline-block px-2.5 py-0.5 rounded-full bg-slate-100 text-slate-700 font-black text-[11px] border border-slate-200">
+                  <td className="py-3 px-3">
+                    <div className="space-y-0.5">
+                      <span className="inline-block px-2 py-0.5 rounded-md bg-slate-100 text-slate-700 font-semibold text-[10px] border border-slate-200">
                         {pdf.class_level || "Class 12"}
                       </span>
-                      <span className="block text-[11px] font-bold text-[#016737]">
+                      <span className="block text-[10px] font-medium text-[#016737]">
                         {pdf.note_type === "short"
                           ? "⚡ Short Mindmap"
                           : pdf.chapter_id
                           ? "📚 Chapter Note"
-                          : "📄 General Note"}
+                          : "📄 Note"}
                       </span>
                     </div>
                   </td>
-                  <td className="py-4 px-4">
+                  <td className="py-3 px-3">
                     {pdf.is_free ? (
-                      <span className="inline-flex items-center gap-1 px-3 py-1 rounded-full bg-emerald-50 border border-emerald-200 text-emerald-800 font-black text-xs">
-                        <Unlock className="w-3.5 h-3.5 text-emerald-600" />
-                        <span>🟢 FREE</span>
+                      <span className="inline-flex items-center gap-1 px-2 py-0.5 rounded-md bg-emerald-50 border border-emerald-200 text-emerald-800 font-bold text-[10px]">
+                        <Unlock className="w-3 h-3 text-emerald-600" />
+                        <span>FREE</span>
                       </span>
                     ) : (
-                      <span className="inline-flex items-center gap-1 px-3 py-1 rounded-full bg-amber-50 border border-amber-200 text-amber-900 font-black text-xs">
-                        <Lock className="w-3.5 h-3.5 text-amber-700" />
-                        <span>🔒 PAID (₹{pdf.price})</span>
+                      <span className="inline-flex items-center gap-1 px-2 py-0.5 rounded-md bg-amber-50 border border-amber-200 text-amber-900 font-bold text-[10px]">
+                        <Lock className="w-3 h-3 text-amber-700" />
+                        <span>₹{pdf.price}</span>
                       </span>
                     )}
                   </td>
-                  <td className="py-4 px-4">
+                  <td className="py-3 px-3">
                     <button
                       onClick={() => togglePdfRecent(pdf.id, pdf.is_recent)}
-                      className={`inline-flex items-center gap-1.5 px-3 py-1 rounded-full text-xs font-black border transition-all ${
+                      className={`inline-flex items-center gap-1 px-2.5 py-0.5 rounded-md text-[10px] font-bold border transition-all ${
                         pdf.is_recent
-                          ? "bg-amber-100 border-amber-300 text-amber-900 shadow-2xs"
+                          ? "bg-amber-50 border-amber-200 text-amber-900"
                           : "bg-slate-100 border-slate-200 text-slate-500 hover:bg-slate-200"
                       }`}
                     >
-                      <Pin className="w-3.5 h-3.5" />
-                      <span>{pdf.is_recent ? "📌 Featured in Recent" : "Not in Recent"}</span>
+                      <Pin className="w-3 h-3" />
+                      <span>{pdf.is_recent ? "📌 Featured" : "Not Featured"}</span>
                     </button>
                   </td>
-                  <td className="py-4 px-4 text-right space-x-2">
+                  <td className="py-3 px-3 text-right">
                     <button
                       onClick={() => togglePdfActive(pdf.id, pdf.is_active)}
-                      className={`px-3 py-1.5 rounded-xl text-xs font-extrabold transition-all border shadow-2xs ${
+                      className={`px-3 py-1 rounded-lg text-xs font-semibold transition-all border shadow-2xs ${
                         pdf.is_active
-                          ? "bg-slate-100 hover:bg-slate-200 text-slate-700 border-slate-300"
+                          ? "bg-slate-50 hover:bg-slate-100 text-slate-600 border-slate-200"
                           : "bg-[#016737] hover:bg-[#014d29] text-white border-transparent"
                       }`}
                     >
-                      {pdf.is_active ? "Hide" : "Publish Live 🟢"}
+                      {pdf.is_active ? "Hide" : "Publish"}
                     </button>
                   </td>
                 </tr>
@@ -399,28 +390,28 @@ export default function AdminPDFsPage() {
         </div>
       </div>
 
-      {/* Upload Wizard Modal */}
+      {/* Upload Modal */}
       {isModalOpen && (
-        <div className="fixed inset-0 bg-slate-900/60 backdrop-blur-xs z-50 flex items-center justify-center p-4 overflow-y-auto">
-          <div className="bg-white border border-slate-200 rounded-3xl p-6 max-w-lg w-full shadow-2xl my-8">
-            <div className="flex items-center justify-between pb-4 border-b border-slate-100 mb-5">
-              <h3 className="font-black text-base text-slate-900 flex items-center gap-2">
-                <Upload className="w-5 h-5 text-[#016737]" />
+        <div className="fixed inset-0 bg-slate-900/40 backdrop-blur-xs z-50 flex items-center justify-center p-4 overflow-y-auto">
+          <div className="bg-white border border-slate-200 rounded-2xl p-5 max-w-lg w-full shadow-xl my-6">
+            <div className="flex items-center justify-between pb-3 border-b border-slate-100 mb-4">
+              <h3 className="font-bold text-sm text-slate-900 flex items-center gap-2">
+                <Upload className="w-4 h-4 text-[#016737]" />
                 <span>Upload New Study Material</span>
               </h3>
               <button
                 onClick={() => setIsModalOpen(false)}
-                className="p-1.5 rounded-xl bg-slate-100 text-slate-500 hover:text-slate-900"
+                className="p-1 rounded-lg bg-slate-100 text-slate-500 hover:text-slate-900"
               >
                 <X className="w-4 h-4" />
               </button>
             </div>
 
-            <form onSubmit={handleUploadPDF} className="space-y-4">
-              {/* Target Section Category */}
+            <form onSubmit={handleUploadPDF} className="space-y-3.5">
+              {/* Category */}
               <div>
-                <label className="block text-xs font-black text-slate-700 mb-1.5">
-                  1. Target Material Category
+                <label className="block text-xs font-semibold text-slate-700 mb-1">
+                  Material Category
                 </label>
                 <div className="grid grid-cols-2 gap-2">
                   {[
@@ -437,29 +428,27 @@ export default function AdminPDFsPage() {
                         if (cat.id === "free") setIsFree(true);
                         else setIsFree(false);
                       }}
-                      className={`p-2.5 rounded-xl border text-xs font-black flex items-center gap-2 transition-all ${
+                      className={`p-2 rounded-xl border text-xs font-semibold flex items-center gap-2 transition-all ${
                         noteType === cat.id
-                          ? "bg-[#016737] text-white border-[#016737] shadow-xs"
+                          ? "bg-[#016737] text-white border-[#016737]"
                           : "bg-slate-50 text-slate-700 border-slate-200 hover:bg-slate-100"
                       }`}
                     >
-                      <cat.icon className="w-4 h-4" />
+                      <cat.icon className="w-3.5 h-3.5" />
                       <span>{cat.label}</span>
                     </button>
                   ))}
                 </div>
               </div>
 
-              {/* Class & Chapter Dropdowns */}
+              {/* Class & Chapter */}
               <div className="grid grid-cols-1 sm:grid-cols-2 gap-3">
                 <div>
-                  <label className="block text-xs font-black text-slate-700 mb-1">
-                    2. Class Level
-                  </label>
+                  <label className="block text-xs font-semibold text-slate-700 mb-1">Class Level</label>
                   <select
                     value={classLevel}
                     onChange={(e) => setClassLevel(e.target.value as any)}
-                    className="w-full px-3.5 py-2.5 rounded-xl bg-slate-50 border border-slate-200 text-slate-900 text-xs font-bold focus:outline-none focus:border-[#016737]"
+                    className="w-full px-3 py-2 rounded-xl bg-slate-50 border border-slate-200 text-slate-900 text-xs font-medium focus:outline-none focus:border-[#016737]"
                   >
                     <option value="Class 11">Class 11</option>
                     <option value="Class 12">Class 12</option>
@@ -468,15 +457,13 @@ export default function AdminPDFsPage() {
                 </div>
 
                 <div>
-                  <label className="block text-xs font-black text-slate-700 mb-1">
-                    3. Assign to Chapter Topic
-                  </label>
+                  <label className="block text-xs font-semibold text-slate-700 mb-1">Chapter Topic</label>
                   <select
                     value={chapterId}
                     onChange={(e) => setChapterId(e.target.value)}
-                    className="w-full px-3.5 py-2.5 rounded-xl bg-slate-50 border border-slate-200 text-slate-900 text-xs font-bold focus:outline-none focus:border-[#016737]"
+                    className="w-full px-3 py-2 rounded-xl bg-slate-50 border border-slate-200 text-slate-900 text-xs font-medium focus:outline-none focus:border-[#016737]"
                   >
-                    <option value="">(Optional) Select Chapter...</option>
+                    <option value="">Select Chapter...</option>
                     {chapters.map((c) => (
                       <option key={c.id} value={c.id}>
                         {c.name}
@@ -488,87 +475,83 @@ export default function AdminPDFsPage() {
 
               {/* Title */}
               <div>
-                <label className="block text-xs font-black text-slate-700 mb-1">
-                  4. PDF Title Name
-                </label>
+                <label className="block text-xs font-semibold text-slate-700 mb-1">PDF Title</label>
                 <input
                   type="text"
                   required
                   value={title}
                   onChange={(e) => setTitle(e.target.value)}
-                  placeholder="Class 12 Biology - NCERT High Yield Note"
-                  className="w-full px-3.5 py-2.5 rounded-xl bg-slate-50 border border-slate-200 text-slate-900 text-xs font-bold focus:outline-none focus:border-[#016737]"
+                  placeholder="Class 12 Biology - NCERT Note"
+                  className="w-full px-3 py-2 rounded-xl bg-slate-50 border border-slate-200 text-slate-900 text-xs font-medium focus:outline-none focus:border-[#016737]"
                 />
               </div>
 
               {/* Description */}
               <div>
-                <label className="block text-xs font-black text-slate-700 mb-1">
-                  5. Short Description
-                </label>
+                <label className="block text-xs font-semibold text-slate-700 mb-1">Description</label>
                 <textarea
                   rows={2}
                   value={description}
                   onChange={(e) => setDescription(e.target.value)}
-                  placeholder="Key Mendelian ratios, diagrams, and NEET priority revision points."
-                  className="w-full px-3.5 py-2.5 rounded-xl bg-slate-50 border border-slate-200 text-slate-900 text-xs font-semibold focus:outline-none focus:border-[#016737]"
+                  placeholder="Key Mendelian ratios and diagrams."
+                  className="w-full px-3 py-2 rounded-xl bg-slate-50 border border-slate-200 text-slate-900 text-xs font-medium focus:outline-none focus:border-[#016737]"
                 />
               </div>
 
               {/* Files Upload Grid */}
               <div className="grid grid-cols-1 sm:grid-cols-2 gap-3">
-                <div className="p-3.5 rounded-2xl bg-slate-50 border border-slate-200 text-center">
-                  <ImageIcon className="w-5 h-5 text-[#016737] mx-auto mb-1" />
-                  <label className="block text-xs font-black text-slate-700 mb-1 cursor-pointer">
-                    Upload Cover Image
+                <div className="p-3 rounded-xl bg-slate-50 border border-slate-200 text-center">
+                  <ImageIcon className="w-4 h-4 text-[#016737] mx-auto mb-1" />
+                  <label className="block text-xs font-semibold text-slate-700 mb-1 cursor-pointer">
+                    Cover Image
                   </label>
                   <input
                     type="file"
                     accept="image/*"
                     onChange={(e) => setThumbnailFile(e.target.files?.[0] || null)}
-                    className="text-[11px] text-slate-500 w-full font-semibold"
+                    className="text-[10px] text-slate-500 w-full"
                   />
                 </div>
 
-                <div className="p-3.5 rounded-2xl bg-slate-50 border border-slate-200 text-center">
-                  <FileText className="w-5 h-5 text-[#8BC43F] mx-auto mb-1" />
-                  <label className="block text-xs font-black text-slate-700 mb-1 cursor-pointer">
-                    Upload PDF Document
+                <div className="p-3 rounded-xl bg-slate-50 border border-slate-200 text-center">
+                  <FileText className="w-4 h-4 text-[#8BC43F] mx-auto mb-1" />
+                  <label className="block text-xs font-semibold text-slate-700 mb-1 cursor-pointer">
+                    PDF File
                   </label>
                   <input
                     type="file"
                     accept=".pdf"
                     onChange={(e) => setPdfFile(e.target.files?.[0] || null)}
-                    className="text-[11px] text-slate-500 w-full font-semibold"
+                    className="text-[10px] text-slate-500 w-full"
                   />
                 </div>
               </div>
 
               {/* Recent Showcase Checkbox & Price */}
-              <div className="p-4 rounded-2xl bg-slate-50 border border-slate-200 space-y-3">
+              <div className="p-3.5 rounded-xl bg-slate-50 border border-slate-200 space-y-2.5">
                 <label className="flex items-center gap-2 cursor-pointer">
                   <input
                     type="checkbox"
                     checked={isRecent}
                     onChange={(e) => setIsRecent(e.target.checked)}
-                    className="w-4 h-4 text-[#016737] rounded border-slate-300 focus:ring-[#016737]"
+                    className="w-3.5 h-3.5 text-[#016737] rounded border-slate-300"
                   />
-                  <span className="text-xs font-black text-slate-900 flex items-center gap-1.5">
-                    <Pin className="w-3.5 h-3.5 text-amber-600" />
-                    <span>📌 Feature in Recent Section on Homepage</span>
+                  <span className="text-xs font-semibold text-slate-800 flex items-center gap-1">
+                    <Pin className="w-3 h-3 text-amber-600" />
+                    <span>Feature in Homepage Recent Section</span>
                   </span>
                 </label>
 
                 {noteType === "paid" && (
                   <div>
-                    <label className="block text-xs font-black text-slate-700 mb-1">
-                      Price Amount (₹)
+                    <label className="block text-xs font-semibold text-slate-700 mb-1">
+                      Price (₹)
                     </label>
                     <input
                       type="number"
                       value={price}
                       onChange={(e) => setPrice(Number(e.target.value))}
-                      className="w-full px-3.5 py-2.5 rounded-xl bg-white border border-slate-200 text-slate-900 text-xs font-mono font-bold focus:outline-none focus:border-[#016737]"
+                      className="w-full px-3 py-2 rounded-xl bg-white border border-slate-200 text-slate-900 text-xs font-mono font-bold focus:outline-none focus:border-[#016737]"
                     />
                   </div>
                 )}
@@ -576,26 +559,26 @@ export default function AdminPDFsPage() {
 
               {/* Status Message */}
               {statusMessage && (
-                <div className="p-3 rounded-xl bg-emerald-50 border border-emerald-200 text-emerald-800 text-xs font-bold animate-pulse">
+                <div className="p-2.5 rounded-lg bg-emerald-50 border border-emerald-200 text-emerald-800 text-xs font-medium animate-pulse">
                   {statusMessage}
                 </div>
               )}
 
               {/* Buttons */}
-              <div className="pt-3 flex gap-3">
+              <div className="pt-2 flex gap-2.5">
                 <button
                   type="button"
                   onClick={() => setIsModalOpen(false)}
-                  className="flex-1 py-3 rounded-xl bg-slate-100 text-slate-700 text-xs font-black"
+                  className="flex-1 py-2 rounded-xl bg-slate-100 text-slate-600 text-xs font-semibold"
                 >
                   Cancel
                 </button>
                 <button
                   type="submit"
                   disabled={loading}
-                  className="flex-1 py-3 rounded-xl bg-[#016737] hover:bg-[#014d29] text-white text-xs font-black shadow-md"
+                  className="flex-1 py-2 rounded-xl bg-[#016737] hover:bg-[#014d29] text-white text-xs font-semibold shadow-2xs"
                 >
-                  {loading ? "Uploading Files..." : "Save & Publish Live 🟢"}
+                  {loading ? "Uploading..." : "Save & Publish"}
                 </button>
               </div>
             </form>

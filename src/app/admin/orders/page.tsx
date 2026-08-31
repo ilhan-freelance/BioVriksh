@@ -60,68 +60,68 @@ export default function AdminOrdersPage() {
 
   return (
     <div className="space-y-6">
-      {/* Top Banner */}
-      <div className="flex flex-col sm:flex-row items-start sm:items-center justify-between gap-4 bg-white border border-slate-200 p-6 rounded-3xl shadow-xs">
+      {/* Executive Header Banner */}
+      <div className="flex flex-col sm:flex-row items-start sm:items-center justify-between gap-4 bg-white border border-slate-200 p-5 rounded-2xl shadow-2xs">
         <div>
-          <h1 className="text-xl font-black text-slate-900 flex items-center gap-2">
-            <ShoppingCart className="w-5 h-5 text-[#016737]" />
+          <h1 className="text-base font-bold text-slate-900 tracking-tight flex items-center gap-2">
+            <ShoppingCart className="w-4 h-4 text-[#016737]" />
             <span>Orders &amp; Sales Log</span>
           </h1>
-          <p className="text-xs text-slate-500 font-semibold mt-1">
-            Complete transaction history of verified student note purchases and Razorpay payment IDs.
+          <p className="text-xs text-slate-500 font-medium mt-0.5">
+            Verified student purchases and Razorpay payment IDs.
           </p>
         </div>
 
         {/* Search */}
-        <div className="relative w-full sm:w-72">
-          <Search className="w-4 h-4 text-slate-400 absolute left-3.5 top-1/2 -translate-y-1/2" />
+        <div className="relative w-full sm:w-64">
+          <Search className="w-3.5 h-3.5 text-slate-400 absolute left-3 top-1/2 -translate-y-1/2" />
           <input
             type="text"
             value={searchQuery}
             onChange={(e) => setSearchQuery(e.target.value)}
-            placeholder="Search student name, note or Txn ID..."
-            className="w-full pl-10 pr-4 py-2.5 rounded-xl bg-slate-50 border border-slate-200 text-slate-900 text-xs font-semibold focus:outline-none focus:border-[#016737] focus:bg-white transition-all"
+            placeholder="Search student or Txn ID..."
+            className="w-full pl-8 pr-3 py-1.5 rounded-xl bg-slate-50 border border-slate-200 text-slate-900 text-xs font-medium focus:outline-none focus:border-[#016737]"
           />
         </div>
       </div>
 
       {/* Orders Table */}
-      <div className="bg-white border border-slate-200 rounded-3xl p-6 shadow-xs">
+      <div className="bg-white border border-slate-200 rounded-2xl p-5 shadow-2xs">
         <div className="overflow-x-auto">
           <table className="w-full text-left border-collapse text-xs">
             <thead>
-              <tr className="border-b border-slate-200 text-slate-500 uppercase font-black tracking-wider bg-slate-50">
-                <th className="py-3 px-4">Date &amp; Time</th>
-                <th className="py-3 px-4">Student Aspirant</th>
-                <th className="py-3 px-4">PDF Note Unlocked</th>
-                <th className="py-3 px-4">Amount Paid</th>
-                <th className="py-3 px-4">Payment Status</th>
-                <th className="py-3 px-4">Razorpay Txn ID</th>
+              <tr className="border-b border-slate-200 text-slate-500 uppercase font-semibold text-[10px] tracking-wider bg-slate-50">
+                <th className="py-2.5 px-3">Date</th>
+                <th className="py-2.5 px-3">Student</th>
+                <th className="py-2.5 px-3">PDF Material</th>
+                <th className="py-2.5 px-3">Amount</th>
+                <th className="py-2.5 px-3">Status</th>
+                <th className="py-2.5 px-3">Razorpay Txn ID</th>
               </tr>
             </thead>
-            <tbody className="divide-y divide-slate-100 font-semibold text-slate-700">
+            <tbody className="divide-y divide-slate-100 font-medium text-slate-700">
               {filteredPurchases.map((p) => (
-                <tr key={p.id} className="hover:bg-slate-50/80 transition-colors">
-                  <td className="py-3.5 px-4 font-mono text-slate-500 text-[11px]">
+                <tr key={p.id} className="hover:bg-slate-50/60 transition-colors">
+                  <td className="py-3 px-3 font-mono text-slate-500 text-[11px]">
                     {new Date(p.purchased_at).toLocaleDateString("en-IN", {
                       day: "2-digit",
                       month: "short",
                       year: "numeric",
                     })}
                   </td>
-                  <td className="py-3.5 px-4">
-                    <span className="font-extrabold text-slate-900 block">{p.student?.full_name || "Aspirant"}</span>
-                    <span className="text-[11px] text-slate-500">{p.student?.phone}</span>
+                  <td className="py-3 px-3">
+                    <span className="font-semibold text-slate-900 block">{p.student?.full_name || "Aspirant"}</span>
+                    <span className="text-[10px] text-slate-400 font-normal">{p.student?.phone}</span>
                   </td>
-                  <td className="py-3.5 px-4 font-bold text-[#016737]">{p.pdf?.title}</td>
-                  <td className="py-3.5 px-4 font-mono font-black text-slate-900">₹{p.amount_paid}</td>
-                  <td className="py-3.5 px-4">
-                    <span className="inline-flex items-center gap-1.5 px-2.5 py-0.5 rounded-full bg-emerald-50 border border-emerald-200 text-emerald-800 text-[11px] font-extrabold">
-                      <CheckCircle2 className="w-3.5 h-3.5 text-emerald-600" />
+                  <td className="py-3 px-3 font-semibold text-[#016737]">{p.pdf?.title}</td>
+                  <td className="py-3 px-3 font-mono font-bold text-slate-900">₹{p.amount_paid}</td>
+                  <td className="py-3 px-3">
+                    <span className="inline-flex items-center gap-1 px-2 py-0.5 rounded-md bg-emerald-50 border border-emerald-200 text-emerald-800 text-[10px] font-bold">
+                      <CheckCircle2 className="w-3 h-3 text-emerald-600" />
                       <span>{p.payment_status}</span>
                     </span>
                   </td>
-                  <td className="py-3.5 px-4 font-mono text-slate-500 text-[11px]">
+                  <td className="py-3 px-3 font-mono text-slate-500 text-[11px]">
                     {p.payment_gateway_id || "pay_Rzp1098234"}
                   </td>
                 </tr>
