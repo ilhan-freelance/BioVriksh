@@ -1,5 +1,8 @@
 export type UserRole = "admin" | "student";
 
+export type NoteType = "paid" | "free" | "short" | "chapter";
+export type ClassLevel = "Class 11" | "Class 12" | "NEET Special";
+
 export interface Profile {
   id: string;
   full_name: string | null;
@@ -27,6 +30,9 @@ export interface PDFNote {
   is_free: boolean;
   price: number;
   is_active: boolean;
+  is_recent: boolean; // Owner toggle to feature ANY note in Recents section
+  note_type: NoteType;
+  class_level: ClassLevel;
   page_count: number;
   created_at: string;
   updated_at: string;

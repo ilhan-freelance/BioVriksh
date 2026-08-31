@@ -49,7 +49,7 @@ create table if not exists public.chapters (
 );
 
 -- ----------------------------------------------------------------------------
--- 3. PDFS TABLE (Study Materials & Notes)
+-- 3. PDFS TABLE (Study Materials & Notes with Categorization & Recent Toggle)
 -- ----------------------------------------------------------------------------
 create table if not exists public.pdfs (
   id uuid primary key default gen_random_uuid(),
@@ -61,10 +61,18 @@ create table if not exists public.pdfs (
   is_free boolean default false,
   price numeric(10,2) default 0,
   is_active boolean default true,
+  is_recent boolean default false, -- Owner toggle to showcase ANY note in Recents section
+  note_type text default 'paid' check (note_type in ('paid', 'free', 'short', 'chapter')),
+  class_level text default 'Class 12' check (class_level in ('Class 11', 'Class 12', 'NEET Special')),
   page_count int default 12,
   created_at timestamptz default now(),
   updated_at timestamptz default now()
 );
+
+-- Add columns if table already exists
+alter table public.pdfs add column if not exists is_recent boolean default false;
+alter table public.pdfs add column if not exists note_type text default 'paid';
+alter table public.pdfs add column if not exists class_level text default 'Class 12';
 
 -- ----------------------------------------------------------------------------
 -- 4. PURCHASES TABLE (Orders & Unlocked Notes)
@@ -120,17 +128,14 @@ create policy "No direct client insert on purchases" on public.purchases
 -- ----------------------------------------------------------------------------
 -- 6. STORAGE BUCKETS SETUP
 -- ----------------------------------------------------------------------------
--- Create public thumbnail bucket
 insert into storage.buckets (id, name, public)
 values ('pdf-thumbnails', 'pdf-thumbnails', true)
 on conflict (id) do nothing;
 
--- Create private pdf files bucket
 insert into storage.buckets (id, name, public)
 values ('pdf-files', 'pdf-files', false)
 on conflict (id) do nothing;
 
--- Storage Policies for pdf-thumbnails (Public view, Admin upload/delete)
 create policy "Public view pdf-thumbnails" on storage.objects
   for select using (bucket_id = 'pdf-thumbnails');
 
@@ -143,7 +148,6 @@ create policy "Admin update pdf-thumbnails" on storage.objects
 create policy "Admin delete pdf-thumbnails" on storage.objects
   for delete using (bucket_id = 'pdf-thumbnails' and exists (select 1 from public.profiles where id = auth.uid() and role = 'admin'));
 
--- Storage Policies for pdf-files (Private bucket, Admin upload/delete)
 create policy "Admin manage pdf-files" on storage.objects
   for all using (bucket_id = 'pdf-files' and exists (select 1 from public.profiles where id = auth.uid() and role = 'admin'));
 

@@ -16,7 +16,7 @@ export default function AdminOrdersPage() {
       payment_gateway_id: "pay_Rzp1098234",
       purchased_at: new Date().toISOString(),
       student: { id: "s1", full_name: "Rahul Sharma", phone: "+91 9876543210", role: "student", created_at: "" },
-      pdf: { id: "pdf1", chapter_id: "c1", title: "Class 12 Genetics & Evolution Note", description: "", thumbnail_url: "", file_path: "", is_free: false, price: 49, is_active: true, page_count: 18, created_at: "", updated_at: "" },
+      pdf: { id: "pdf1", chapter_id: "c1", title: "Class 12 Genetics & Evolution Note", description: "", thumbnail_url: "", file_path: "", is_free: false, price: 49, is_active: true, is_recent: true, note_type: "paid", class_level: "Class 12", page_count: 18, created_at: "", updated_at: "" },
     },
     {
       id: "p2",
@@ -27,7 +27,7 @@ export default function AdminOrdersPage() {
       payment_gateway_id: "pay_Rzp1098235",
       purchased_at: new Date(Date.now() - 86400000).toISOString(),
       student: { id: "s2", full_name: "Priya Patel", phone: "+91 9876543211", role: "student", created_at: "" },
-      pdf: { id: "pdf2", chapter_id: "c2", title: "Human Reproduction Ultra Revision Note", description: "", thumbnail_url: "", file_path: "", is_free: false, price: 49, is_active: true, page_count: 14, created_at: "", updated_at: "" },
+      pdf: { id: "pdf2", chapter_id: "c2", title: "Human Reproduction Ultra Revision Note", description: "", thumbnail_url: "", file_path: "", is_free: false, price: 49, is_active: true, is_recent: true, note_type: "paid", class_level: "Class 12", page_count: 14, created_at: "", updated_at: "" },
     },
   ]);
 
