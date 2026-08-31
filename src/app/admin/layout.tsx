@@ -14,7 +14,6 @@ import {
   Menu,
   X,
   Sparkles,
-  Zap,
 } from "lucide-react";
 import { useState } from "react";
 import { createClient } from "@/lib/supabase/client";
@@ -44,7 +43,6 @@ export default function AdminLayout({ children }: { children: React.ReactNode })
     { name: "Dashboard Overview", href: "/admin", icon: LayoutDashboard },
     { name: "Chapters Manager", href: "/admin/chapters", icon: FolderTree },
     { name: "PDF Notes Manager", href: "/admin/pdfs", icon: FileText },
-    { name: "Short Notes", href: "/admin/short-notes", icon: Zap },
     { name: "Orders & Sales Log", href: "/admin/orders", icon: ShoppingCart },
     { name: "Student Directory", href: "/admin/students", icon: Users },
   ];
