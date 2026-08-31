@@ -1,7 +1,7 @@
 "use client";
 
 import { useState, useEffect } from "react";
-import { ShoppingCart, CheckCircle2, Search, ArrowUpRight } from "lucide-react";
+import { ShoppingCart, CheckCircle2, Search } from "lucide-react";
 import { createClient } from "@/lib/supabase/client";
 import { Purchase } from "@/types/database";
 
@@ -61,48 +61,48 @@ export default function AdminOrdersPage() {
   return (
     <div className="space-y-6">
       {/* Top Banner */}
-      <div className="flex flex-col sm:flex-row items-start sm:items-center justify-between gap-4 bg-[#131B2A] border border-gray-800 p-6 rounded-3xl shadow-xl">
+      <div className="flex flex-col sm:flex-row items-start sm:items-center justify-between gap-4 bg-white border border-slate-200 p-6 rounded-3xl shadow-xs">
         <div>
-          <h1 className="text-xl font-bold text-white flex items-center gap-2">
-            <ShoppingCart className="w-5 h-5 text-[#8BC43F]" />
-            <span>Orders & Purchases Log</span>
+          <h1 className="text-xl font-black text-slate-900 flex items-center gap-2">
+            <ShoppingCart className="w-5 h-5 text-[#016737]" />
+            <span>Orders &amp; Sales Log</span>
           </h1>
-          <p className="text-xs text-gray-400 mt-1">
-            Complete list of verified student note purchases and Razorpay transaction IDs.
+          <p className="text-xs text-slate-500 font-semibold mt-1">
+            Complete transaction history of verified student note purchases and Razorpay payment IDs.
           </p>
         </div>
 
         {/* Search */}
-        <div className="relative w-full sm:w-64">
-          <Search className="w-4 h-4 text-gray-400 absolute left-3.5 top-1/2 -translate-y-1/2" />
+        <div className="relative w-full sm:w-72">
+          <Search className="w-4 h-4 text-slate-400 absolute left-3.5 top-1/2 -translate-y-1/2" />
           <input
             type="text"
             value={searchQuery}
             onChange={(e) => setSearchQuery(e.target.value)}
-            placeholder="Search by student, title, or Txn ID..."
-            className="w-full pl-10 pr-4 py-2 rounded-xl bg-gray-900 border border-gray-700 text-white text-xs focus:outline-none focus:border-[#8BC43F]"
+            placeholder="Search student name, note or Txn ID..."
+            className="w-full pl-10 pr-4 py-2.5 rounded-xl bg-slate-50 border border-slate-200 text-slate-900 text-xs font-semibold focus:outline-none focus:border-[#016737] focus:bg-white transition-all"
           />
         </div>
       </div>
 
       {/* Orders Table */}
-      <div className="bg-[#131B2A] border border-gray-800 rounded-3xl p-6 shadow-xl">
+      <div className="bg-white border border-slate-200 rounded-3xl p-6 shadow-xs">
         <div className="overflow-x-auto">
           <table className="w-full text-left border-collapse text-xs">
             <thead>
-              <tr className="border-b border-gray-800 text-gray-400 uppercase font-extrabold tracking-wider">
-                <th className="py-3 px-4">Date & Time</th>
-                <th className="py-3 px-4">Student</th>
-                <th className="py-3 px-4">PDF Note Title</th>
-                <th className="py-3 px-4">Amount</th>
-                <th className="py-3 px-4">Status</th>
+              <tr className="border-b border-slate-200 text-slate-500 uppercase font-black tracking-wider bg-slate-50">
+                <th className="py-3 px-4">Date &amp; Time</th>
+                <th className="py-3 px-4">Student Aspirant</th>
+                <th className="py-3 px-4">PDF Note Unlocked</th>
+                <th className="py-3 px-4">Amount Paid</th>
+                <th className="py-3 px-4">Payment Status</th>
                 <th className="py-3 px-4">Razorpay Txn ID</th>
               </tr>
             </thead>
-            <tbody className="divide-y divide-gray-800/60 font-medium text-gray-300">
+            <tbody className="divide-y divide-slate-100 font-semibold text-slate-700">
               {filteredPurchases.map((p) => (
-                <tr key={p.id} className="hover:bg-gray-800/40 transition-colors">
-                  <td className="py-3.5 px-4 font-mono text-gray-400 text-[11px]">
+                <tr key={p.id} className="hover:bg-slate-50/80 transition-colors">
+                  <td className="py-3.5 px-4 font-mono text-slate-500 text-[11px]">
                     {new Date(p.purchased_at).toLocaleDateString("en-IN", {
                       day: "2-digit",
                       month: "short",
@@ -110,18 +110,18 @@ export default function AdminOrdersPage() {
                     })}
                   </td>
                   <td className="py-3.5 px-4">
-                    <span className="font-bold text-white block">{p.student?.full_name || "Aspirant"}</span>
-                    <span className="text-[11px] text-gray-400">{p.student?.phone}</span>
+                    <span className="font-extrabold text-slate-900 block">{p.student?.full_name || "Aspirant"}</span>
+                    <span className="text-[11px] text-slate-500">{p.student?.phone}</span>
                   </td>
-                  <td className="py-3.5 px-4 font-semibold text-emerald-300">{p.pdf?.title}</td>
-                  <td className="py-3.5 px-4 font-mono font-bold text-white">₹{p.amount_paid}</td>
+                  <td className="py-3.5 px-4 font-bold text-[#016737]">{p.pdf?.title}</td>
+                  <td className="py-3.5 px-4 font-mono font-black text-slate-900">₹{p.amount_paid}</td>
                   <td className="py-3.5 px-4">
-                    <span className="inline-flex items-center gap-1.5 px-2.5 py-0.5 rounded-full bg-emerald-950/80 border border-emerald-700/60 text-emerald-400 text-[11px] font-bold">
-                      <CheckCircle2 className="w-3 h-3" />
+                    <span className="inline-flex items-center gap-1.5 px-2.5 py-0.5 rounded-full bg-emerald-50 border border-emerald-200 text-emerald-800 text-[11px] font-extrabold">
+                      <CheckCircle2 className="w-3.5 h-3.5 text-emerald-600" />
                       <span>{p.payment_status}</span>
                     </span>
                   </td>
-                  <td className="py-3.5 px-4 font-mono text-gray-400 text-[11px]">
+                  <td className="py-3.5 px-4 font-mono text-slate-500 text-[11px]">
                     {p.payment_gateway_id || "pay_Rzp1098234"}
                   </td>
                 </tr>

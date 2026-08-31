@@ -1,7 +1,7 @@
 "use client";
 
 import { useState, useEffect } from "react";
-import { FolderTree, Plus, Edit2, Check, X, ToggleLeft, ToggleRight, Trash2, BookOpen } from "lucide-react";
+import { FolderTree, Plus, BookOpen, ToggleLeft, ToggleRight, X, Sparkles, CheckCircle2 } from "lucide-react";
 import { createClient } from "@/lib/supabase/client";
 import { Chapter } from "@/types/database";
 
@@ -52,12 +52,11 @@ export default function AdminChaptersPage() {
         is_active: true,
       };
 
-      const { data, error } = await supabase.from("chapters").insert(newChapter).select().single();
+      const { data } = await supabase.from("chapters").insert(newChapter).select().single();
 
       if (data) {
         setChapters((prev) => [...prev, data]);
       } else {
-        // Fallback local update
         setChapters((prev) => [
           ...prev,
           { id: `ch-${Date.now()}`, name, subject, order_index: Number(orderIndex), is_active: true, created_at: new Date().toISOString() },
@@ -88,21 +87,22 @@ export default function AdminChaptersPage() {
 
   return (
     <div className="space-y-6">
-      {/* Top Bar */}
-      <div className="flex flex-col sm:flex-row items-start sm:items-center justify-between gap-4 bg-[#131B2A] border border-gray-800 p-6 rounded-3xl shadow-xl">
+      {/* ═══ KID-SIMPLE GUIDANCE BANNER ═══ */}
+      <div className="bg-white border border-slate-200 p-6 rounded-3xl shadow-xs flex flex-col sm:flex-row items-start sm:items-center justify-between gap-4">
         <div>
-          <h1 className="text-xl font-bold text-white flex items-center gap-2">
-            <FolderTree className="w-5 h-5 text-[#8BC43F]" />
+          <div className="inline-flex items-center gap-1.5 px-3 py-1 rounded-full bg-[#016737]/10 text-[#016737] text-xs font-black mb-2">
+            <Sparkles className="w-3.5 h-3.5 text-[#8BC43F]" />
             <span>Chapter Management</span>
-          </h1>
-          <p className="text-xs text-gray-400 mt-1">
-            Create, manage and re-order NEET Biology chapters. Populates the dropdown when uploading PDFs.
+          </div>
+          <h1 className="text-xl font-black text-slate-900">Chapters &amp; Categories</h1>
+          <p className="text-xs text-slate-500 font-semibold mt-1">
+            Create NEET chapters here. When uploading PDF notes, you can assign them to these chapters.
           </p>
         </div>
 
         <button
           onClick={() => setIsModalOpen(true)}
-          className="px-4 py-2.5 rounded-xl bg-[#016737] hover:bg-[#014d29] text-white text-xs font-bold transition-all flex items-center gap-2 shadow-md"
+          className="px-5 py-3 rounded-2xl bg-[#016737] hover:bg-[#014d29] text-white text-xs font-black transition-all flex items-center gap-2 shadow-md shrink-0 hover:scale-105"
         >
           <Plus className="w-4 h-4" />
           <span>+ Create New Chapter</span>
@@ -110,44 +110,52 @@ export default function AdminChaptersPage() {
       </div>
 
       {/* Chapters Table */}
-      <div className="bg-[#131B2A] border border-gray-800 rounded-3xl p-6 shadow-xl">
+      <div className="bg-white border border-slate-200 rounded-3xl p-6 shadow-xs">
         <div className="overflow-x-auto">
           <table className="w-full text-left border-collapse text-xs">
             <thead>
-              <tr className="border-b border-gray-800 text-gray-400 uppercase font-extrabold tracking-wider">
-                <th className="py-3 px-4">Order</th>
+              <tr className="border-b border-slate-200 text-slate-500 uppercase font-black tracking-wider bg-slate-50">
+                <th className="py-3 px-4">Display Order</th>
                 <th className="py-3 px-4">Chapter Title</th>
                 <th className="py-3 px-4">Subject</th>
                 <th className="py-3 px-4">Live Status</th>
-                <th className="py-3 px-4 text-right">Actions</th>
+                <th className="py-3 px-4 text-right">1-Click Toggle</th>
               </tr>
             </thead>
-            <tbody className="divide-y divide-gray-800/60 font-medium text-gray-300">
+            <tbody className="divide-y divide-slate-100 font-semibold text-slate-700">
               {chapters.map((ch) => (
-                <tr key={ch.id} className="hover:bg-gray-800/40 transition-colors">
-                  <td className="py-3.5 px-4 font-mono font-bold text-emerald-400">
+                <tr key={ch.id} className="hover:bg-slate-50/80 transition-colors">
+                  <td className="py-4 px-4 font-mono font-black text-[#016737]">
                     #{ch.order_index}
                   </td>
-                  <td className="py-3.5 px-4 font-bold text-white flex items-center gap-2">
-                    <BookOpen className="w-4 h-4 text-gray-500" />
+                  <td className="py-4 px-4 font-black text-slate-900 flex items-center gap-2 text-sm">
+                    <BookOpen className="w-4 h-4 text-[#016737]" />
                     <span>{ch.name}</span>
                   </td>
-                  <td className="py-3.5 px-4 text-gray-400 font-semibold">{ch.subject}</td>
-                  <td className="py-3.5 px-4">
+                  <td className="py-4 px-4 text-slate-600 font-bold">{ch.subject}</td>
+                  <td className="py-4 px-4">
+                    {ch.is_active ? (
+                      <span className="inline-flex items-center gap-1.5 px-3 py-1 rounded-full bg-emerald-50 border border-emerald-200 text-emerald-800 text-xs font-extrabold">
+                        <CheckCircle2 className="w-3.5 h-3.5 text-emerald-600" />
+                        <span>🟢 Live on Website</span>
+                      </span>
+                    ) : (
+                      <span className="inline-flex items-center gap-1.5 px-3 py-1 rounded-full bg-slate-100 border border-slate-200 text-slate-500 text-xs font-extrabold">
+                        <span>🔴 Hidden</span>
+                      </span>
+                    )}
+                  </td>
+                  <td className="py-4 px-4 text-right">
                     <button
                       onClick={() => toggleChapterActive(ch.id, ch.is_active)}
-                      className={`inline-flex items-center gap-1.5 px-2.5 py-0.5 rounded-full text-[11px] font-bold border transition-colors ${
+                      className={`px-3 py-1.5 rounded-xl text-xs font-extrabold transition-all border shadow-2xs ${
                         ch.is_active
-                          ? "bg-emerald-950/80 border-emerald-700/60 text-emerald-400"
-                          : "bg-gray-800 border-gray-700 text-gray-400"
+                          ? "bg-slate-100 hover:bg-slate-200 text-slate-700 border-slate-300"
+                          : "bg-[#016737] hover:bg-[#014d29] text-white border-transparent"
                       }`}
                     >
-                      {ch.is_active ? <ToggleRight className="w-4 h-4" /> : <ToggleLeft className="w-4 h-4" />}
-                      <span>{ch.is_active ? "Active" : "Inactive"}</span>
+                      {ch.is_active ? "Hide Chapter" : "Make Live 🟢"}
                     </button>
-                  </td>
-                  <td className="py-3.5 px-4 text-right">
-                    <span className="text-xs text-gray-500 font-semibold">Editable</span>
                   </td>
                 </tr>
               ))}
@@ -158,13 +166,13 @@ export default function AdminChaptersPage() {
 
       {/* Modal: Create Chapter */}
       {isModalOpen && (
-        <div className="fixed inset-0 bg-black/80 backdrop-blur-md z-50 flex items-center justify-center p-4">
-          <div className="bg-[#131B2A] border border-gray-800 rounded-3xl p-6 max-w-md w-full shadow-2xl">
-            <div className="flex items-center justify-between pb-4 border-b border-gray-800 mb-5">
-              <h3 className="font-bold text-base text-white">Create New Chapter</h3>
+        <div className="fixed inset-0 bg-slate-900/60 backdrop-blur-xs z-50 flex items-center justify-center p-4">
+          <div className="bg-white border border-slate-200 rounded-3xl p-6 max-w-md w-full shadow-2xl">
+            <div className="flex items-center justify-between pb-4 border-b border-slate-100 mb-5">
+              <h3 className="font-black text-base text-slate-900">Create New Chapter</h3>
               <button
                 onClick={() => setIsModalOpen(false)}
-                className="p-1 rounded-lg bg-gray-800 text-gray-400 hover:text-white"
+                className="p-1.5 rounded-xl bg-slate-100 text-slate-500 hover:text-slate-900"
               >
                 <X className="w-4 h-4" />
               </button>
@@ -172,8 +180,8 @@ export default function AdminChaptersPage() {
 
             <form onSubmit={handleCreateChapter} className="space-y-4">
               <div>
-                <label className="block text-xs font-bold text-gray-300 mb-1">
-                  Chapter Name
+                <label className="block text-xs font-black text-slate-700 mb-1">
+                  Chapter Name Title
                 </label>
                 <input
                   type="text"
@@ -181,29 +189,29 @@ export default function AdminChaptersPage() {
                   value={name}
                   onChange={(e) => setName(e.target.value)}
                   placeholder="e.g. Molecular Basis of Inheritance"
-                  className="w-full px-3.5 py-2.5 rounded-xl bg-gray-900 border border-gray-700 text-white text-xs focus:outline-none focus:border-[#8BC43F]"
+                  className="w-full px-3.5 py-2.5 rounded-xl bg-slate-50 border border-slate-200 text-slate-900 text-xs font-bold focus:outline-none focus:border-[#016737] focus:bg-white transition-all"
                 />
               </div>
 
               <div>
-                <label className="block text-xs font-bold text-gray-300 mb-1">Subject</label>
+                <label className="block text-xs font-black text-slate-700 mb-1">Subject</label>
                 <input
                   type="text"
                   value={subject}
                   onChange={(e) => setSubject(e.target.value)}
-                  className="w-full px-3.5 py-2.5 rounded-xl bg-gray-900 border border-gray-700 text-white text-xs focus:outline-none focus:border-[#8BC43F]"
+                  className="w-full px-3.5 py-2.5 rounded-xl bg-slate-50 border border-slate-200 text-slate-900 text-xs font-bold focus:outline-none focus:border-[#016737] focus:bg-white transition-all"
                 />
               </div>
 
               <div>
-                <label className="block text-xs font-bold text-gray-300 mb-1">
-                  Display Order Index
+                <label className="block text-xs font-black text-slate-700 mb-1">
+                  Display Order Index Number
                 </label>
                 <input
                   type="number"
                   value={orderIndex}
                   onChange={(e) => setOrderIndex(Number(e.target.value))}
-                  className="w-full px-3.5 py-2.5 rounded-xl bg-gray-900 border border-gray-700 text-white text-xs focus:outline-none focus:border-[#8BC43F]"
+                  className="w-full px-3.5 py-2.5 rounded-xl bg-slate-50 border border-slate-200 text-slate-900 text-xs font-bold focus:outline-none focus:border-[#016737] focus:bg-white transition-all"
                 />
               </div>
 
@@ -211,14 +219,14 @@ export default function AdminChaptersPage() {
                 <button
                   type="button"
                   onClick={() => setIsModalOpen(false)}
-                  className="flex-1 py-2.5 rounded-xl bg-gray-800 hover:bg-gray-700 text-gray-300 text-xs font-bold"
+                  className="flex-1 py-2.5 rounded-xl bg-slate-100 text-slate-700 text-xs font-extrabold"
                 >
                   Cancel
                 </button>
                 <button
                   type="submit"
                   disabled={loading}
-                  className="flex-1 py-2.5 rounded-xl bg-[#016737] hover:bg-[#014d29] text-white text-xs font-bold"
+                  className="flex-1 py-2.5 rounded-xl bg-[#016737] hover:bg-[#014d29] text-white text-xs font-extrabold shadow-md"
                 >
                   Save Chapter
                 </button>

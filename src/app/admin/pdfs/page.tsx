@@ -14,6 +14,7 @@ import {
   X,
   Sparkles,
   BookOpen,
+  Eye,
 } from "lucide-react";
 import { createClient } from "@/lib/supabase/client";
 import { PDFNote, Chapter } from "@/types/database";
@@ -93,7 +94,7 @@ export default function AdminPDFsPage() {
       let thumbnailUrl = "/hero_biology_ultra_wow.png";
       let filePath = `notes_${Date.now()}.pdf`;
 
-      // 1. Upload Thumbnail Image to Public Bucket 'pdf-thumbnails'
+      // Upload Thumbnail Image to Public Bucket 'pdf-thumbnails'
       if (thumbnailFile) {
         const thumbName = `thumb_${Date.now()}_${thumbnailFile.name}`;
         const { data: thumbData } = await supabase.storage
@@ -108,7 +109,7 @@ export default function AdminPDFsPage() {
         }
       }
 
-      // 2. Upload PDF file to Private Bucket 'pdf-files'
+      // Upload PDF file to Private Bucket 'pdf-files'
       if (pdfFile) {
         const pdfFileName = `pdf_${Date.now()}_${pdfFile.name}`;
         const { data: pdfUploadData } = await supabase.storage
@@ -120,7 +121,7 @@ export default function AdminPDFsPage() {
         }
       }
 
-      // 3. Insert record into Supabase `pdfs` Table
+      // Insert record into Supabase `pdfs` Table
       const newPdfRow = {
         chapter_id: chapterId || null,
         title,
@@ -138,7 +139,6 @@ export default function AdminPDFsPage() {
       if (insertedData) {
         setPdfs((prev) => [insertedData as any, ...prev]);
       } else {
-        // Fallback local update
         setPdfs((prev) => [
           {
             id: `pdf-${Date.now()}`,
@@ -192,46 +192,47 @@ export default function AdminPDFsPage() {
 
   return (
     <div className="space-y-6">
-      {/* Top Banner */}
-      <div className="flex flex-col sm:flex-row items-start sm:items-center justify-between gap-4 bg-[#131B2A] border border-gray-800 p-6 rounded-3xl shadow-xl">
+      {/* ═══ KID-SIMPLE GUIDANCE BANNER ═══ */}
+      <div className="bg-white border border-slate-200 p-6 rounded-3xl shadow-xs flex flex-col sm:flex-row items-start sm:items-center justify-between gap-4">
         <div>
-          <h1 className="text-xl font-bold text-white flex items-center gap-2">
-            <FileText className="w-5 h-5 text-[#8BC43F]" />
-            <span>PDF Study Material CMS</span>
-          </h1>
-          <p className="text-xs text-gray-400 mt-1">
-            Upload new NCERT notes, set free/paid pricing, upload thumbnails, and manage active PDFs live.
+          <div className="inline-flex items-center gap-1.5 px-3 py-1 rounded-full bg-[#016737]/10 text-[#016737] text-xs font-black mb-2">
+            <Sparkles className="w-3.5 h-3.5 text-[#8BC43F]" />
+            <span>Study Notes Manager</span>
+          </div>
+          <h1 className="text-xl font-black text-slate-900">PDF Study Notes &amp; Materials</h1>
+          <p className="text-xs text-slate-500 font-semibold mt-1">
+            Upload notes, set Free or Paid pricing (₹), and toggle live visibility on the website instantly.
           </p>
         </div>
 
         <button
           onClick={() => setIsModalOpen(true)}
-          className="px-4 py-2.5 rounded-xl bg-[#016737] hover:bg-[#014d29] text-white text-xs font-bold transition-all flex items-center gap-2 shadow-md"
+          className="px-5 py-3 rounded-2xl bg-[#016737] hover:bg-[#014d29] text-white text-xs font-black transition-all flex items-center gap-2 shadow-md shrink-0 hover:scale-105"
         >
           <Plus className="w-4 h-4" />
           <span>+ Upload New PDF Note</span>
         </button>
       </div>
 
-      {/* PDFs Grid/Table */}
-      <div className="bg-[#131B2A] border border-gray-800 rounded-3xl p-6 shadow-xl">
+      {/* PDFs Table */}
+      <div className="bg-white border border-slate-200 rounded-3xl p-6 shadow-xs">
         <div className="overflow-x-auto">
           <table className="w-full text-left border-collapse text-xs">
             <thead>
-              <tr className="border-b border-gray-800 text-gray-400 uppercase font-extrabold tracking-wider">
-                <th className="py-3 px-4">Material Details</th>
-                <th className="py-3 px-4">Type & Price</th>
-                <th className="py-3 px-4">Pages</th>
+              <tr className="border-b border-slate-200 text-slate-500 uppercase font-black tracking-wider bg-slate-50">
+                <th className="py-3 px-4">Study Material Card</th>
+                <th className="py-3 px-4">Pricing Model</th>
+                <th className="py-3 px-4">Page Length</th>
                 <th className="py-3 px-4">Live Website Status</th>
-                <th className="py-3 px-4 text-right">Actions</th>
+                <th className="py-3 px-4 text-right">1-Click Toggle</th>
               </tr>
             </thead>
-            <tbody className="divide-y divide-gray-800/60 font-medium text-gray-300">
+            <tbody className="divide-y divide-slate-100 font-semibold text-slate-700">
               {pdfs.map((pdf) => (
-                <tr key={pdf.id} className="hover:bg-gray-800/40 transition-colors">
+                <tr key={pdf.id} className="hover:bg-slate-50/80 transition-colors">
                   <td className="py-4 px-4">
                     <div className="flex items-center gap-3">
-                      <div className="w-12 h-14 rounded-lg bg-gray-900 border border-gray-700 overflow-hidden shrink-0">
+                      <div className="w-12 h-14 rounded-xl bg-slate-100 border border-slate-200 overflow-hidden shrink-0 shadow-2xs">
                         <img
                           src={pdf.thumbnail_url || "/hero_biology_ultra_wow.png"}
                           alt=""
@@ -239,8 +240,8 @@ export default function AdminPDFsPage() {
                         />
                       </div>
                       <div>
-                        <h4 className="font-bold text-white text-xs leading-snug">{pdf.title}</h4>
-                        <p className="text-[11px] text-gray-400 mt-0.5 line-clamp-1">
+                        <h4 className="font-black text-slate-900 text-sm leading-snug">{pdf.title}</h4>
+                        <p className="text-xs text-slate-500 mt-0.5 line-clamp-1 font-semibold">
                           {pdf.description}
                         </p>
                       </div>
@@ -248,35 +249,43 @@ export default function AdminPDFsPage() {
                   </td>
                   <td className="py-4 px-4">
                     {pdf.is_free ? (
-                      <span className="inline-flex items-center gap-1 px-2.5 py-0.5 rounded-full bg-emerald-950 border border-emerald-700 text-emerald-400 font-bold text-[11px]">
-                        <Unlock className="w-3 h-3" />
-                        <span>FREE</span>
+                      <span className="inline-flex items-center gap-1 px-3 py-1 rounded-full bg-emerald-50 border border-emerald-200 text-emerald-800 font-black text-xs">
+                        <Unlock className="w-3.5 h-3.5 text-emerald-600" />
+                        <span>🟢 FREE</span>
                       </span>
                     ) : (
-                      <span className="inline-flex items-center gap-1 px-2.5 py-0.5 rounded-full bg-amber-950 border border-amber-700 text-amber-300 font-bold text-[11px]">
-                        <Lock className="w-3 h-3" />
-                        <span>₹{pdf.price}</span>
+                      <span className="inline-flex items-center gap-1 px-3 py-1 rounded-full bg-amber-50 border border-amber-200 text-amber-900 font-black text-xs">
+                        <Lock className="w-3.5 h-3.5 text-amber-700" />
+                        <span>🔒 PAID (₹{pdf.price})</span>
                       </span>
                     )}
                   </td>
-                  <td className="py-4 px-4 font-mono font-bold text-gray-400">
+                  <td className="py-4 px-4 font-mono font-bold text-slate-600 text-xs">
                     {pdf.page_count} Pages
                   </td>
                   <td className="py-4 px-4">
+                    {pdf.is_active ? (
+                      <span className="inline-flex items-center gap-1.5 px-3 py-1 rounded-full bg-emerald-50 border border-emerald-200 text-emerald-800 text-xs font-extrabold">
+                        <CheckCircle2 className="w-3.5 h-3.5 text-emerald-600" />
+                        <span>🟢 Live Active</span>
+                      </span>
+                    ) : (
+                      <span className="inline-flex items-center gap-1.5 px-3 py-1 rounded-full bg-slate-100 border border-slate-200 text-slate-500 text-xs font-extrabold">
+                        <span>🔴 Hidden</span>
+                      </span>
+                    )}
+                  </td>
+                  <td className="py-4 px-4 text-right">
                     <button
                       onClick={() => togglePdfActive(pdf.id, pdf.is_active)}
-                      className={`inline-flex items-center gap-1.5 px-2.5 py-0.5 rounded-full text-[11px] font-bold border transition-colors ${
+                      className={`px-3.5 py-1.5 rounded-xl text-xs font-extrabold transition-all border shadow-2xs ${
                         pdf.is_active
-                          ? "bg-emerald-950/80 border-emerald-700/60 text-emerald-400"
-                          : "bg-gray-800 border-gray-700 text-gray-400"
+                          ? "bg-slate-100 hover:bg-slate-200 text-slate-700 border-slate-300"
+                          : "bg-[#016737] hover:bg-[#014d29] text-white border-transparent"
                       }`}
                     >
-                      {pdf.is_active ? <ToggleRight className="w-4 h-4" /> : <ToggleLeft className="w-4 h-4" />}
-                      <span>{pdf.is_active ? "Live Active" : "Hidden"}</span>
+                      {pdf.is_active ? "Hide Note" : "Publish Live 🟢"}
                     </button>
-                  </td>
-                  <td className="py-4 px-4 text-right font-semibold text-gray-400">
-                    <span>Active</span>
                   </td>
                 </tr>
               ))}
@@ -285,18 +294,18 @@ export default function AdminPDFsPage() {
         </div>
       </div>
 
-      {/* Upload Modal */}
+      {/* Upload Wizard Modal */}
       {isModalOpen && (
-        <div className="fixed inset-0 bg-black/80 backdrop-blur-md z-50 flex items-center justify-center p-4 overflow-y-auto">
-          <div className="bg-[#131B2A] border border-gray-800 rounded-3xl p-6 max-w-lg w-full shadow-2xl my-8">
-            <div className="flex items-center justify-between pb-4 border-b border-gray-800 mb-5">
-              <h3 className="font-bold text-base text-white flex items-center gap-2">
-                <Upload className="w-4 h-4 text-[#8BC43F]" />
+        <div className="fixed inset-0 bg-slate-900/60 backdrop-blur-xs z-50 flex items-center justify-center p-4 overflow-y-auto">
+          <div className="bg-white border border-slate-200 rounded-3xl p-6 max-w-lg w-full shadow-2xl my-8">
+            <div className="flex items-center justify-between pb-4 border-b border-slate-100 mb-5">
+              <h3 className="font-black text-base text-slate-900 flex items-center gap-2">
+                <Upload className="w-5 h-5 text-[#016737]" />
                 <span>Upload New Study Material</span>
               </h3>
               <button
                 onClick={() => setIsModalOpen(false)}
-                className="p-1 rounded-lg bg-gray-800 text-gray-400 hover:text-white"
+                className="p-1.5 rounded-xl bg-slate-100 text-slate-500 hover:text-slate-900"
               >
                 <X className="w-4 h-4" />
               </button>
@@ -305,13 +314,13 @@ export default function AdminPDFsPage() {
             <form onSubmit={handleUploadPDF} className="space-y-4">
               {/* Select Chapter */}
               <div>
-                <label className="block text-xs font-bold text-gray-300 mb-1">
-                  Select Chapter
+                <label className="block text-xs font-black text-slate-700 mb-1">
+                  1. Select Chapter Category
                 </label>
                 <select
                   value={chapterId}
                   onChange={(e) => setChapterId(e.target.value)}
-                  className="w-full px-3.5 py-2.5 rounded-xl bg-gray-900 border border-gray-700 text-white text-xs focus:outline-none focus:border-[#8BC43F]"
+                  className="w-full px-3.5 py-2.5 rounded-xl bg-slate-50 border border-slate-200 text-slate-900 text-xs font-bold focus:outline-none focus:border-[#016737] focus:bg-white"
                 >
                   <option value="">Select Chapter Dropdown...</option>
                   {chapters.map((c) => (
@@ -324,8 +333,8 @@ export default function AdminPDFsPage() {
 
               {/* Title */}
               <div>
-                <label className="block text-xs font-bold text-gray-300 mb-1">
-                  PDF Title Name
+                <label className="block text-xs font-black text-slate-700 mb-1">
+                  2. PDF Title Name
                 </label>
                 <input
                   type="text"
@@ -333,67 +342,67 @@ export default function AdminPDFsPage() {
                   value={title}
                   onChange={(e) => setTitle(e.target.value)}
                   placeholder="Class 12 Biology - NCERT High Yield Note"
-                  className="w-full px-3.5 py-2.5 rounded-xl bg-gray-900 border border-gray-700 text-white text-xs focus:outline-none focus:border-[#8BC43F]"
+                  className="w-full px-3.5 py-2.5 rounded-xl bg-slate-50 border border-slate-200 text-slate-900 text-xs font-bold focus:outline-none focus:border-[#016737] focus:bg-white"
                 />
               </div>
 
               {/* Description */}
               <div>
-                <label className="block text-xs font-bold text-gray-300 mb-1">
-                  Short Description
+                <label className="block text-xs font-black text-slate-700 mb-1">
+                  3. Short Summary Description
                 </label>
                 <textarea
                   rows={2}
                   value={description}
                   onChange={(e) => setDescription(e.target.value)}
                   placeholder="Key Mendelian ratios, diagrams, and NEET priority revision points."
-                  className="w-full px-3.5 py-2.5 rounded-xl bg-gray-900 border border-gray-700 text-white text-xs focus:outline-none focus:border-[#8BC43F]"
+                  className="w-full px-3.5 py-2.5 rounded-xl bg-slate-50 border border-slate-200 text-slate-900 text-xs font-semibold focus:outline-none focus:border-[#016737] focus:bg-white"
                 />
               </div>
 
               {/* Files Upload Grid */}
               <div className="grid grid-cols-1 sm:grid-cols-2 gap-3">
                 {/* Thumbnail File */}
-                <div className="p-3.5 rounded-xl bg-gray-900 border border-gray-800 text-center">
-                  <ImageIcon className="w-6 h-6 text-[#8BC43F] mx-auto mb-1" />
-                  <label className="block text-xs font-bold text-gray-300 mb-1 cursor-pointer">
-                    Cover Thumbnail Image
+                <div className="p-3.5 rounded-2xl bg-slate-50 border border-slate-200 text-center">
+                  <ImageIcon className="w-6 h-6 text-[#016737] mx-auto mb-1" />
+                  <label className="block text-xs font-black text-slate-700 mb-1 cursor-pointer">
+                    Upload Cover Image
                   </label>
                   <input
                     type="file"
                     accept="image/*"
                     onChange={(e) => setThumbnailFile(e.target.files?.[0] || null)}
-                    className="text-[11px] text-gray-400 w-full"
+                    className="text-[11px] text-slate-500 w-full font-semibold"
                   />
                 </div>
 
                 {/* PDF File */}
-                <div className="p-3.5 rounded-xl bg-gray-900 border border-gray-800 text-center">
-                  <FileText className="w-6 h-6 text-[#016737] mx-auto mb-1" />
-                  <label className="block text-xs font-bold text-gray-300 mb-1 cursor-pointer">
-                    PDF Document File
+                <div className="p-3.5 rounded-2xl bg-slate-50 border border-slate-200 text-center">
+                  <FileText className="w-6 h-6 text-[#8BC43F] mx-auto mb-1" />
+                  <label className="block text-xs font-black text-slate-700 mb-1 cursor-pointer">
+                    Upload PDF Document
                   </label>
                   <input
                     type="file"
                     accept=".pdf"
                     onChange={(e) => setPdfFile(e.target.files?.[0] || null)}
-                    className="text-[11px] text-gray-400 w-full"
+                    className="text-[11px] text-slate-500 w-full font-semibold"
                   />
                 </div>
               </div>
 
               {/* Free / Paid Toggle & Price */}
-              <div className="p-4 rounded-xl bg-gray-900/80 border border-gray-800 space-y-3">
+              <div className="p-4 rounded-2xl bg-slate-50 border border-slate-200 space-y-3">
                 <div className="flex items-center justify-between">
-                  <span className="text-xs font-bold text-white">Pricing Model</span>
+                  <span className="text-xs font-black text-slate-900">4. Set Pricing Model</span>
                   <div className="flex items-center gap-2">
                     <button
                       type="button"
                       onClick={() => setIsFree(true)}
-                      className={`px-3 py-1 rounded-lg text-xs font-bold border transition-colors ${
+                      className={`px-3 py-1 rounded-xl text-xs font-black border transition-colors ${
                         isFree
-                          ? "bg-emerald-950 border-emerald-600 text-emerald-400"
-                          : "bg-gray-800 border-gray-700 text-gray-400"
+                          ? "bg-emerald-600 text-white border-emerald-600"
+                          : "bg-white border-slate-200 text-slate-600"
                       }`}
                     >
                       FREE
@@ -401,10 +410,10 @@ export default function AdminPDFsPage() {
                     <button
                       type="button"
                       onClick={() => setIsFree(false)}
-                      className={`px-3 py-1 rounded-lg text-xs font-bold border transition-colors ${
+                      className={`px-3 py-1 rounded-xl text-xs font-black border transition-colors ${
                         !isFree
-                          ? "bg-amber-950 border-amber-600 text-amber-300"
-                          : "bg-gray-800 border-gray-700 text-gray-400"
+                          ? "bg-amber-600 text-white border-amber-600"
+                          : "bg-white border-slate-200 text-slate-600"
                       }`}
                     >
                       PAID (₹)
@@ -414,14 +423,14 @@ export default function AdminPDFsPage() {
 
                 {!isFree && (
                   <div>
-                    <label className="block text-xs font-bold text-gray-300 mb-1">
+                    <label className="block text-xs font-black text-slate-700 mb-1">
                       Price Amount (₹)
                     </label>
                     <input
                       type="number"
                       value={price}
                       onChange={(e) => setPrice(Number(e.target.value))}
-                      className="w-full px-3.5 py-2 rounded-xl bg-gray-950 border border-gray-700 text-white text-xs font-mono font-bold focus:outline-none focus:border-[#8BC43F]"
+                      className="w-full px-3.5 py-2.5 rounded-xl bg-white border border-slate-200 text-slate-900 text-xs font-mono font-bold focus:outline-none focus:border-[#016737]"
                     />
                   </div>
                 )}
@@ -429,7 +438,7 @@ export default function AdminPDFsPage() {
 
               {/* Status Message */}
               {statusMessage && (
-                <div className="p-3 rounded-xl bg-emerald-950/80 border border-emerald-700 text-emerald-300 text-xs font-bold animate-pulse">
+                <div className="p-3 rounded-xl bg-emerald-50 border border-emerald-200 text-emerald-800 text-xs font-bold animate-pulse">
                   {statusMessage}
                 </div>
               )}
@@ -439,16 +448,16 @@ export default function AdminPDFsPage() {
                 <button
                   type="button"
                   onClick={() => setIsModalOpen(false)}
-                  className="flex-1 py-2.5 rounded-xl bg-gray-800 text-gray-300 text-xs font-bold"
+                  className="flex-1 py-3 rounded-xl bg-slate-100 text-slate-700 text-xs font-black"
                 >
                   Cancel
                 </button>
                 <button
                   type="submit"
                   disabled={loading}
-                  className="flex-1 py-2.5 rounded-xl bg-[#016737] hover:bg-[#014d29] text-white text-xs font-bold shadow-md"
+                  className="flex-1 py-3 rounded-xl bg-[#016737] hover:bg-[#014d29] text-white text-xs font-black shadow-md"
                 >
-                  {loading ? "Uploading to Storage..." : "Save & Publish Live"}
+                  {loading ? "Uploading Files..." : "Save & Publish Live 🟢"}
                 </button>
               </div>
             </form>
