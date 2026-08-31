@@ -58,16 +58,15 @@ export default function AdminLoginPage() {
       <div className="absolute bottom-1/4 right-1/4 w-96 h-96 bg-[#016737]/10 rounded-full blur-3xl pointer-events-none" />
 
       <div className="w-full max-w-md bg-white border border-slate-200 p-8 rounded-3xl shadow-xl relative z-10">
-        {/* Header */}
-        <div className="text-center mb-8">
-          <div className="w-16 h-16 rounded-2xl bg-[#016737]/10 border border-[#016737]/20 text-[#016737] flex items-center justify-center mx-auto mb-4 shadow-xs">
-            <ShieldCheck className="w-8 h-8" />
-          </div>
-          <h1 className="text-2xl font-black tracking-tight text-slate-900 flex items-center justify-center gap-2">
-            <span>Bio Vriksha Admin</span>
-          </h1>
-          <p className="text-xs text-slate-500 font-semibold mt-1.5">
-            Sign in with administrator email and password to open the CMS Control Panel.
+        {/* Header - Logo Only */}
+        <div className="text-center mb-6">
+          <img
+            src="/logo_transparent.png"
+            alt="Logo"
+            className="h-20 w-auto object-contain mx-auto mb-2 drop-shadow-sm"
+          />
+          <p className="text-xs text-slate-500 font-semibold mt-1">
+            Sign in with administrator credentials to access the CMS Control Panel.
           </p>
         </div>
 

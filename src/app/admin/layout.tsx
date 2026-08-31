@@ -52,19 +52,13 @@ export default function AdminLayout({ children }: { children: React.ReactNode })
       {/* ═══ DESKTOP LIGHT SIDEBAR ═══ */}
       <aside className="hidden md:flex flex-col w-64 bg-white border-r border-slate-200 p-5 shrink-0 justify-between shadow-xs">
         <div>
-          {/* Brand Logo */}
-          <div className="flex items-center gap-3 pb-5 border-b border-slate-100 mb-6">
-            <div className="w-10 h-10 rounded-xl bg-[#016737] flex items-center justify-center text-[#8BC43F] shadow-sm">
-              <ShieldCheck className="w-6 h-6" />
-            </div>
-            <div>
-              <h2 className="font-black text-base text-slate-900 tracking-tight leading-tight">
-                Bio Vriksha
-              </h2>
-              <span className="text-[10px] font-extrabold text-[#016737] bg-[#016737]/10 px-2.5 py-0.5 rounded-full border border-[#016737]/20 uppercase tracking-wider">
-                Admin Control
-              </span>
-            </div>
+          {/* Brand Logo - Logo Only */}
+          <div className="flex items-center justify-center pb-4 border-b border-slate-100 mb-6">
+            <img
+              src="/logo_transparent.png"
+              alt="Logo"
+              className="h-16 w-auto object-contain drop-shadow-sm"
+            />
           </div>
 
           {/* Navigation Links */}
@@ -112,10 +106,13 @@ export default function AdminLayout({ children }: { children: React.ReactNode })
       </aside>
 
       {/* ═══ MOBILE TOP HEADER ═══ */}
-      <div className="md:hidden bg-white border-b border-slate-200 px-4 py-3 flex items-center justify-between shadow-xs">
-        <div className="flex items-center gap-2.5">
-          <ShieldCheck className="w-5 h-5 text-[#016737]" />
-          <span className="font-black text-sm text-slate-900">Bio Vriksha Admin</span>
+      <div className="md:hidden bg-white border-b border-slate-200 px-4 py-2 flex items-center justify-between shadow-xs">
+        <div className="flex items-center">
+          <img
+            src="/logo_transparent.png"
+            alt="Logo"
+            className="h-10 w-auto object-contain"
+          />
         </div>
 
         <button
